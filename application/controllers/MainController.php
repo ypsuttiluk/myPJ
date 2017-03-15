@@ -61,6 +61,7 @@ class MainController extends CI_Controller {
         $sql3 = 'select questionKey from examinationdim where examKey = (select examKey from roomDim where rKey = ' . $rKey . ')';
         $questionKey = $this->ExamModel->getData($sql3);
       //koly
+        //kolydfddfefkndknmf
         $quesID = explode(',', $questionKey[0]['questionKey']);
         print_r($quesID);
         echo count($quesID);
