@@ -65,9 +65,7 @@ class MainController extends CI_Controller {
         print_r($quesID);
         echo count($quesID);
         die();
-        echo $numOfQues;
-        die();
-
+  
         if ($result[0]['rKey'] == NULL) {
             if ($rs[0]['rStatus'] == 1) {
                 $sql = 'update studentdim set rKey = ' . $rKey . ' where sKey = ' . $sKey;
