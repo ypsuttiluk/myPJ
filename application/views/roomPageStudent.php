@@ -27,9 +27,14 @@ if (isset($this->session->userdata['logged_in'])) {
 <br>
 <div class="container">
     <?php
-    $string = $rs[0]['questionKey'];
-    $quesID = explode(',', $string);
-    print_r($quesID);
+    $numOfQues = count($rs);
+    for ($i = 0; $i < count($rs); $i++) {
+        $sql = 'select * from answerdim where quesKey = ' . $rs[0];
+        $ans[$i] = $this->ExamModel->getData($sql);
+        $sql1 = 'select quesText from questiondim where quesKey = ' . $rs[0];
+        $ques[$i] = $this->ExamModel->getData($sql1);
+    }
+    print_r($ques);
     die();
     ?>
     <div class="container-fluid">
@@ -40,46 +45,39 @@ if (isset($this->session->userdata['logged_in'])) {
                         <div class="item active">
                             <img src="<?php echo base_url(); ?>asset/image/pencil2.jpg" alt="First slide">
                             <div class="carousel-caption">
-                                <h3>
-                                    First slide</h3>
-                                <p>
-                                    Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+                                <div class="panel panel-success">
+                                    <div class="panel-heading">
+                                        <?php echo $rs[0]['quesText']; ?>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="item">
-                            <img src="<?php echo base_url(); ?>asset/image/pencil2.jpg" alt="Second slide">
-                            <div class="carousel-caption">
-                                <h3>
-                                    Second slide</h3>
-                                <p>
-                                    Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+                        <!--<?php //for ($i = 1; $i < $numOfQues; $i++) {            ?>
+                            <div class="item">
+                                <img src="<?php //echo base_url();            ?>asset/image/pencil2.jpg" alt="Second slide">
+                                <div class="carousel-caption">
+                                    <h3><?php // echo $rs[$i]['quesText'];            ?></h3>
+                                    <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+                                </div>
                             </div>
-                        </div>
-                        <div class="item">
-                            <img src="<?php echo base_url(); ?>asset/image/pencil2.jpg" alt="Third slide">
-                            <div class="carousel-caption">
-                                <h3>
-                                    Third slide</h3>
-                                <p>
-                                    Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-                            </div>
-                        </div>
+                        <?php //}  ?>-->
                     </div>
-                    <a class="left carousel-control" href="#myCarousel" data-slide="prev">
-                        <span class="glyphicon glyphicon-chevron-left"></span>
-                    </a>
-                    <a class="right carousel-control"href="#myCarousel" data-slide="next">
-                        <span class="glyphicon glyphicon-chevron-right"></span>
-                    </a>
                 </div>
-
-
-
-                <!-- /.container-fluid -->
-
-                <!-- /#page-wrapper -->
+                <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+                    <span class="glyphicon glyphicon-chevron-left"></span>
+                </a>
+                <a class="right carousel-control"href="#myCarousel" data-slide="next">
+                    <span class="glyphicon glyphicon-chevron-right"></span>
+                </a>
             </div>
+
+
+
+            <!-- /.container-fluid -->
+
+            <!-- /#page-wrapper -->
         </div>
     </div>
+</div>
 
 </div>
