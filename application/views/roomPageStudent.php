@@ -47,39 +47,39 @@ if (isset($this->session->userdata['logged_in'])) {
                                     <div class="panel-heading">
                                         <?php echo $ques[0][0]['quesText']; ?>
                                     </div>
-                                    <div class="panel-body">
-                                        <div class="form-group">
-                                            <?php if (count($ans[0]) == 4) { ?>
-                                                <div class="form-group input-group">
-                                                    <span class="input-group-addon">#1</span>
-                                                    <input type="text" class="form-control" value="<?php echo $ans[0][0]['ansText']; ?>" readonly>
-                                                    <span class="input-group-addon fa-fw">กด</span>
-                                                </div>
-                                                <div class="form-group input-group">
-                                                    <span class="input-group-addon">#2</span>
-                                                    <input type="text" class="form-control" value="<?php echo $ans[0][1]['ansText']; ?>" readonly>
-                                                    <span class="input-group-addon fa-fw">กด</span>
-                                                </div>
-                                                <div class="form-group input-group">
-                                                    <span class="input-group-addon">#3</span>
-                                                    <input type="text" class="form-control" value="<?php echo $ans[0][2]['ansText']; ?>" readonly>
-                                                    <span class="input-group-addon fa-fw">กด</span>
-                                                </div>
-                                                <div class="form-group input-group">
-                                                    <span class="input-group-addon">#4</span>
-                                                    <input type="text" class="form-control" value="<?php echo $ans[0][3]['ansText']; ?>" readonly>
-                                                    <span class="input-group-addon fa-fw">กด</span>
-                                                </div>
-                                            <?php } else { ?>
-                                                <div class="col-md-6 col-sm-6">
-                                                    <button type="button" class="btn btn-block" disabled style="background:#98FB98; border:2px solid #7CC667">TRUE</button>
-                                                </div>
-                                                <div class="col-md-6 col-sm-6">
-                                                    <button type="button" class="btn btn-block" disabled style="background:#E4FDDD; border:2px solid #7CC667">FALSE</button>
-                                                </div>
-                                            <?php } ?>
+                                </div>
+                                <div class="form-group">
+                                    <?php if (count($ans[0]) == 4) { ?>
+                                        <div class="form-group input-group">
+                                            <span class="input-group-addon">#1</span>
+                                            <input type="text" class="form-control" value="<?php echo $ans[0][0]['ansText']; ?>" >
+                                            <span class="input-group-addon fa-fw" style="cursor: pointer" onclick="testMC(1)">กด</span>
                                         </div>
-                                    </div>
+                                        <div class="form-group input-group">
+                                            <span class="input-group-addon">#2</span>
+                                            <input type="text" class="form-control" value="<?php echo $ans[0][1]['ansText']; ?>" >
+                                            <span class="input-group-addon fa-fw" style="cursor: pointer" onclick="testMC(2)">กด</span>
+                                        </div>
+                                        <div class="form-group input-group">
+                                            <span class="input-group-addon">#3</span>
+                                            <input type="text" class="form-control" value="<?php echo $ans[0][2]['ansText']; ?>" >
+                                            <span class="input-group-addon fa-fw" style="cursor: pointer" onclick="testMC(3)">กด</span>
+                                        </div>
+                                        <div class="form-group input-group">
+                                            <span class="input-group-addon">#4</span>
+                                            <input type="text" class="form-control" value="<?php echo $ans[0][3]['ansText']; ?>" >
+                                            <span class="input-group-addon fa-fw" style="cursor: pointer" onclick="testMC(4)">กด</span>
+                                        </div>
+                                    <?php } else { ?>
+                                        <div class="form-group">
+                                            <div class="col-md-6 col-sm-6" onclick="testTF(1)">
+                                                <button type="button" class="btn btn-block" id="btn1" name="btnT" style="background:#E4FDDD; border:2px solid #7CC667">TRUE</button>
+                                            </div>
+                                            <div class="col-md-6 col-sm-6" onclick="testTF(2)">
+                                                <button type="button" class="btn btn-block" id="btn2" name="btnF" style="background:#E4FDDD; border:2px solid #7CC667">FALSE</button>
+                                            </div>
+                                        </div>
+                                    <?php } ?>
                                 </div>
                             </div>
                         </div>
@@ -91,39 +91,37 @@ if (isset($this->session->userdata['logged_in'])) {
                                         <div class="panel-heading">
                                             <?php echo $ques[$i][0]['quesText']; ?>
                                         </div>
-                                        <div class="panel-body">
-                                            <div class="form-group">
-                                                <?php if (count($ans[$i]) == 4) { ?>
-                                                    <div class="form-group input-group">
-                                                        <span class="input-group-addon">#1</span>
-                                                        <input type="text" class="form-control" value="<?php echo $ans[$i][0]['ansText']; ?>" readonly>
-                                                        <span class="input-group-addon fa-fw">กด</span>
-                                                    </div>
-                                                    <div class="form-group input-group">
-                                                        <span class="input-group-addon">#2</span>
-                                                        <input type="text" class="form-control" value="<?php echo $ans[$i][1]['ansText']; ?>" readonly>
-                                                        <span class="input-group-addon fa-fw">กด</span>
-                                                    </div>
-                                                    <div class="form-group input-group">
-                                                        <span class="input-group-addon">#3</span>
-                                                        <input type="text" class="form-control" value="<?php echo $ans[$i][2]['ansText']; ?>" readonly>
-                                                        <span class="input-group-addon fa-fw">กด</span>
-                                                    </div>
-                                                    <div class="form-group input-group">
-                                                        <span class="input-group-addon">#4</span>
-                                                        <input type="text" class="form-control" value="<?php echo $ans[$i][3]['ansText']; ?>" readonly>
-                                                        <span class="input-group-addon fa-fw">กด</span>
-                                                    </div>
-                                                <?php } else { ?>
-                                                    <div class="col-md-6 col-sm-6">
-                                                        <button type="button" class="btn btn-block" disabled style="background:#98FB98; border:2px solid #7CC667">TRUE</button>
-                                                    </div>
-                                                    <div class="col-md-6 col-sm-6">
-                                                        <button type="button" class="btn btn-block" disabled style="background:#E4FDDD; border:2px solid #7CC667">FALSE</button>
-                                                    </div>
-                                                <?php } ?>
+                                    </div>
+                                    <div class="form-group">
+                                        <?php if (count($ans[$i]) == 4) { ?>
+                                            <div class="form-group input-group">
+                                                <span class="input-group-addon">#1</span>
+                                                <input type="text" class="form-control" value="<?php echo $ans[$i][0]['ansText']; ?>" >
+                                                <span class="input-group-addon fa-fw"style="cursor: pointer" onclick="testMC(1)">กด</span>
                                             </div>
-                                        </div>
+                                            <div class="form-group input-group">
+                                                <span class="input-group-addon">#2</span>
+                                                <input type="text" class="form-control" value="<?php echo $ans[$i][1]['ansText']; ?>" >
+                                                <span class="input-group-addon fa-fw"style="cursor: pointer" onclick="testMC(2)">กด</span>
+                                            </div>
+                                            <div class="form-group input-group">
+                                                <span class="input-group-addon">#3</span>
+                                                <input type="text" class="form-control" value="<?php echo $ans[$i][2]['ansText']; ?>" >
+                                                <span class="input-group-addon fa-fw" style="cursor: pointer" onclick="testMC(3)">กด</span>
+                                            </div>
+                                            <div class="form-group input-group">
+                                                <span class="input-group-addon">#4</span>
+                                                <input type="text" class="form-control" value="<?php echo $ans[$i][3]['ansText']; ?>" >
+                                                <span class="input-group-addon fa-fw" style="cursor: pointer" onclick="testMC(4)">กด</span>
+                                            </div>
+                                        <?php } else { ?>
+                                            <div class="col-md-6 col-sm-6" onclick="testTF(1)">
+                                                <button type="button" class="btn btn-block" style="background:#E4FDDD; border:2px solid #7CC667;color: black;">TRUE</button>
+                                            </div>
+                                            <div class="col-md-6 col-sm-6" onclick="testTF(2)">
+                                                <button type="button" class="btn btn-block" style="background:#E4FDDD; border:2px solid #7CC667;color: black;">FALSE</button>
+                                            </div>
+                                        <?php } ?>
                                     </div>
                                 </div>
                             </div>
@@ -138,7 +136,14 @@ if (isset($this->session->userdata['logged_in'])) {
                 </a>
             </div>
 
-
+            <div class="form-group">
+                <div class="col-md-6 col-sm-6" onclick="testTF(1)">
+                    <button type="button" class="btn btn-block" id="btn1" name="btnT" style="background:#E4FDDD; border:2px solid #7CC667">TRUE</button>
+                </div>
+                <div class="col-md-6 col-sm-6" onclick="testTF(2)">
+                    <button type="button" class="btn btn-block" id="btn2" name="btnF" style="background:#E4FDDD; border:2px solid #7CC667">FALSE</button>
+                </div>
+            </div>
 
             <!-- /.container-fluid -->
 
