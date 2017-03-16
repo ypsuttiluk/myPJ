@@ -29,13 +29,11 @@ if (isset($this->session->userdata['logged_in'])) {
     <?php
     $numOfQues = count($rs);
     for ($i = 0; $i < count($rs); $i++) {
-        $sql = 'select * from answerdim where quesKey = ' . $rs[0];
-        $ans[$i] = $this->ExamModel->getData($sql);
-        $sql1 = 'select quesText from questiondim where quesKey = ' . $rs[0];
-        $ques[$i] = $this->ExamModel->getData($sql1);
+        $sql = 'select * from answerdim where quesKey = ' . $rs[$i];
+        $ans[] = $this->ExamModel->getData($sql);
+        $sql1 = 'select quesText from questiondim where quesKey = ' . $rs[$i];
+        $ques[] = $this->ExamModel->getData($sql1);
     }
-    print_r($ques);
-    die();
     ?>
     <div class="container-fluid">
         <div class="row">
@@ -47,26 +45,95 @@ if (isset($this->session->userdata['logged_in'])) {
                             <div class="carousel-caption">
                                 <div class="panel panel-success">
                                     <div class="panel-heading">
-                                        <?php echo $rs[0]['quesText']; ?>
+                                        <?php echo $ques[0][0]['quesText']; ?>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="form-group">
+                                            <?php if (count($ans[0]) == 4) { ?>
+                                                <div class="form-group input-group">
+                                                    <span class="input-group-addon">#1</span>
+                                                    <input type="text" class="form-control" value="<?php echo $ans[0][0]['ansText']; ?>" readonly>
+                                                    <span class="input-group-addon fa-fw">กด</span>
+                                                </div>
+                                                <div class="form-group input-group">
+                                                    <span class="input-group-addon">#2</span>
+                                                    <input type="text" class="form-control" value="<?php echo $ans[0][1]['ansText']; ?>" readonly>
+                                                    <span class="input-group-addon fa-fw">กด</span>
+                                                </div>
+                                                <div class="form-group input-group">
+                                                    <span class="input-group-addon">#3</span>
+                                                    <input type="text" class="form-control" value="<?php echo $ans[0][2]['ansText']; ?>" readonly>
+                                                    <span class="input-group-addon fa-fw">กด</span>
+                                                </div>
+                                                <div class="form-group input-group">
+                                                    <span class="input-group-addon">#4</span>
+                                                    <input type="text" class="form-control" value="<?php echo $ans[0][3]['ansText']; ?>" readonly>
+                                                    <span class="input-group-addon fa-fw">กด</span>
+                                                </div>
+                                            <?php } else { ?>
+                                                <div class="col-md-6 col-sm-6">
+                                                    <button type="button" class="btn btn-block" disabled style="background:#98FB98; border:2px solid #7CC667">TRUE</button>
+                                                </div>
+                                                <div class="col-md-6 col-sm-6">
+                                                    <button type="button" class="btn btn-block" disabled style="background:#E4FDDD; border:2px solid #7CC667">FALSE</button>
+                                                </div>
+                                            <?php } ?>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <!--<?php //for ($i = 1; $i < $numOfQues; $i++) {            ?>
+                        <?php for ($i = 1; $i < $numOfQues; $i++) { ?>
                             <div class="item">
-                                <img src="<?php //echo base_url();            ?>asset/image/pencil2.jpg" alt="Second slide">
+                                <img src="<?php echo base_url(); ?>asset/image/pencil2.jpg" alt="First slide">
                                 <div class="carousel-caption">
-                                    <h3><?php // echo $rs[$i]['quesText'];            ?></h3>
-                                    <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+                                    <div class="panel panel-success">
+                                        <div class="panel-heading">
+                                            <?php echo $ques[$i][0]['quesText']; ?>
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="form-group">
+                                                <?php if (count($ans[$i]) == 4) { ?>
+                                                    <div class="form-group input-group">
+                                                        <span class="input-group-addon">#1</span>
+                                                        <input type="text" class="form-control" value="<?php echo $ans[$i][0]['ansText']; ?>" readonly>
+                                                        <span class="input-group-addon fa-fw">กด</span>
+                                                    </div>
+                                                    <div class="form-group input-group">
+                                                        <span class="input-group-addon">#2</span>
+                                                        <input type="text" class="form-control" value="<?php echo $ans[$i][1]['ansText']; ?>" readonly>
+                                                        <span class="input-group-addon fa-fw">กด</span>
+                                                    </div>
+                                                    <div class="form-group input-group">
+                                                        <span class="input-group-addon">#3</span>
+                                                        <input type="text" class="form-control" value="<?php echo $ans[$i][2]['ansText']; ?>" readonly>
+                                                        <span class="input-group-addon fa-fw">กด</span>
+                                                    </div>
+                                                    <div class="form-group input-group">
+                                                        <span class="input-group-addon">#4</span>
+                                                        <input type="text" class="form-control" value="<?php echo $ans[$i][3]['ansText']; ?>" readonly>
+                                                        <span class="input-group-addon fa-fw">กด</span>
+                                                    </div>
+                                                <?php } else { ?>
+                                                    <div class="col-md-6 col-sm-6">
+                                                        <button type="button" class="btn btn-block" disabled style="background:#98FB98; border:2px solid #7CC667">TRUE</button>
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-6">
+                                                        <button type="button" class="btn btn-block" disabled style="background:#E4FDDD; border:2px solid #7CC667">FALSE</button>
+                                                    </div>
+                                                <?php } ?>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        <?php //}  ?>-->
+                        <?php } ?>
                     </div>
                 </div>
                 <a class="left carousel-control" href="#myCarousel" data-slide="prev">
                     <span class="glyphicon glyphicon-chevron-left"></span>
                 </a>
-                <a class="right carousel-control"href="#myCarousel" data-slide="next">
+                <a class="right carousel-control" href="#myCarousel" data-slide="next">
                     <span class="glyphicon glyphicon-chevron-right"></span>
                 </a>
             </div>
