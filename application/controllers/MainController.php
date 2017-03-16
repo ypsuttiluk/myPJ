@@ -53,6 +53,20 @@ class MainController extends CI_Controller {
         }
     }
 
+    public function getQuestion($quesID) {
+        $n = count($quesID);
+        $Condition = '';
+        $text = 'quesKey = ';
+        for ($i = 0; $i < $n; $i++) {
+            $Condition = $Condition . $text . $quesID[$i];
+            if ($i != $n - 1) {
+                $Condition = $Condition . ' or ';
+            }
+        }
+        $sql = 'select quesKey,quesText from questiondim where ' . $Condition;
+        return $this->ExamModel->getData($sql);
+    }
+
     public function joinToRoom($rKey, $sKey) {
         $sql1 = 'select rKey from studentdim where sKey = ' . $sKey;
         $result = $this->ExamModel->getData($sql1);
@@ -60,12 +74,11 @@ class MainController extends CI_Controller {
         $rs = $this->ExamModel->getData($sql2);
         $sql3 = 'select questionKey from examinationdim where examKey = (select examKey from roomDim where rKey = ' . $rKey . ')';
         $questionKey = $this->ExamModel->getData($sql3);
-     //test again by noy use github in desktop
+        //test again by noy use github in desktop
         $quesID = explode(',', $questionKey[0]['questionKey']);
-        print_r($quesID);
-        echo count($quesID);
-        die();
-  
+
+        // $data['rs'] = $this->getQuestion($quesID);
+        $data['rs'] = $quesID;
         if ($result[0]['rKey'] == NULL) {
             if ($rs[0]['rStatus'] == 1) {
                 $sql = 'update studentdim set rKey = ' . $rKey . ' where sKey = ' . $sKey;
