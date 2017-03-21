@@ -5,6 +5,7 @@
     <head>
 
         <meta charset="utf-8">
+
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="">
@@ -24,7 +25,7 @@
         <link href="<?php echo base_url(); ?>asset/vendor/datatables-responsive/dataTables.responsive.css" rel="stylesheet">
         <!-- Bootstrap select -->
         <link href="<?php echo base_url(); ?>asset/vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
-        
+
         <style>
             body, html{
                 background: #222222;
@@ -36,6 +37,7 @@
     </head>
 
     <body>
+
         <?php
         if (isset($this->session->userdata['logged_in'])) {
             if ($this->session->userdata['logged_in']['userType'] == 't') {
@@ -82,7 +84,7 @@
 
                         <?php if (isset($this->session->userdata['logged_in']) && $userType == 't') { ?>
                             <!--<li>
-                                <a href="<?php //echo base_url();      ?>index.php/MainController/roomDetail/<?php //echo $userKey;      ?>">ห้องเรียน</a>
+                                <a href="<?php //echo base_url();        ?>index.php/MainController/roomDetail/<?php //echo $userKey;        ?>">ห้องเรียน</a>
                             </li> -->
                             <li>
                                 <a href="<?php echo base_url(); ?>index.php/MainController/roomDetail/<?php echo $userKey; ?>/<?php echo $userType; ?>">ห้องเรียน</a>
