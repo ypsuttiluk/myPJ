@@ -72,26 +72,31 @@ class MainController extends CI_Controller {
         $result = $this->ExamModel->getData($sql1);
         $sql2 = 'select rStatus from roomdim where rKey = ' . $rKey;
         $rs = $this->ExamModel->getData($sql2);
+
         $sql3 = 'select questionKey from examinationdim where examKey = (select examKey from roomDim where rKey = ' . $rKey . ')';
         $questionKey = $this->ExamModel->getData($sql3);
         //test again by noy use github in desktop
-        $quesID = explode(',', $questionKey[0]['questionKey']);
-
-        // $data['rs'] = $this->getQuestion($quesID);
-        $data['rs'] = $quesID;
+        if (count($questionKey) != 0) {
+            $quesID = explode(',', $questionKey[0]['questionKey']);
+            // $data['rs'] = $this->getQuestion($quesID);
+            $data['rs'] = $quesID;
+            $data['numOfQues'] = count($quesID);
+      
+        }
         if ($result[0]['rKey'] == NULL) {
             if ($rs[0]['rStatus'] == 1) {
                 $sql = 'update studentdim set rKey = ' . $rKey . ' where sKey = ' . $sKey;
                 $this->ExamModel->QueryBySQL($sql);
-
-                $data['page'] = 'roomPageStudent';
+                $data['page'] = 'testDoExam';
+                //$data['page'] = 'roomPageStudent';
                 $this->load->view('Template/template', $data);
             } else {
                 redirect('index.php/MainController/roomDetail/' . $sKey . '/s', 'refresh');
                 exit();
             }
         } else if ($result[0]['rKey'] == $rKey) {
-            $data['page'] = 'roomPageStudent';
+            $data['page'] = 'testDoExam';
+            //$data['page'] = 'roomPageStudent';
             $this->load->view('Template/template', $data);
         } else {
             redirect('index.php/MainController/roomDetail/' . $sKey . '/s', 'refresh');
