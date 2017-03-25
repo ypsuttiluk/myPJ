@@ -78,9 +78,9 @@ if (isset($this->session->userdata['logged_in'])) {
                                     <tr>
                                         <th>รหัสนักศึกษา</th>
                                         <th>ชื่อนักศึกษา</th>
-                                        <th>Platform(s)</th>
-                                        <th>Engine version</th>
-                                        <th>CSS grade</th>
+                                        <th>ทำไปแล้ว</th>
+                                        <th>ทำถูก</th>
+                                        <th>สถานะ</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -88,9 +88,9 @@ if (isset($this->session->userdata['logged_in'])) {
                                         <tr>
                                             <td><?php echo $row['sID']; ?></td>
                                             <td><?php echo $row['sName']; ?></td>
-                                            <td>Win 95+</td>
+                                            <td>6</td>
                                             <td class="center">5</td>
-                                            <td class="center">C</td>
+                                            <td class="center">อยู่ระหว่างการทดสอบ</td>
                                         </tr>
                                     <?php } ?>
                                 </tbody>
@@ -108,3 +108,4 @@ if (isset($this->session->userdata['logged_in'])) {
         <!-- /#container-fluid -->
     </div>
 <?php } ?>
+</div>

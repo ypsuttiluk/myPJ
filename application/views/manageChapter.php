@@ -81,3 +81,4 @@ if (isset($this->session->userdata['logged_in'])) {
         </div>
     </div>
 <?php } ?>
+</div>

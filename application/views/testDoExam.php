@@ -47,3 +47,90 @@ if (isset($this->session->userdata['logged_in'])) {
         </div>
     </div>
 </div>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            url: '<?php echo base_url(); ?>asset/AJAX/testSelect.php',
+            dataType: 'html',
+            method: 'POST',
+            data: {
+                id: <?php echo $rs[0]; ?>
+            },
+            success: function (Result) {
+                $('#result').html(Result);
+
+            }
+        });
+    });
+    $('#next').click(function (event) {
+        a = document.getElementById('test').value
+        b = document.getElementById('next');
+        if (document.getElementById('test').value == <?php echo $numOfQues - 1; ?>) {
+            b.value = <?php echo $numOfQues - 1; ?>;
+        } else {
+            b.value = parseInt(a) + 1;
+        }
+        var idArr = [
+<?php
+for ($i = 0; $i < $numOfQues; $i++) {
+    if ($i != $numOfQues - 1) {
+        echo $rs[$i] . ',';
+    } else {
+        echo $rs[$i];
+    }
+}
+?>
+        ]
+        document.getElementById('test').value = b.value;
+        event.preventDefault();
+        $.ajax({
+            url: '<?php echo base_url(); ?>asset/AJAX/testSelect.php',
+            dataType: 'html',
+            method: 'POST',
+            data: {
+                id: idArr[b.value]
+            },
+            success: function (Result) {
+                $('#result').html(Result);
+            }
+        });
+    });
+    $('#pre').click(function (event) {
+        a = document.getElementById('test').value;
+        b = document.getElementById('next');
+        if (document.getElementById('test').value == 0) {
+            b.value = 0;
+        } else {
+            b.value = parseInt(a) - 1;
+        }
+        var idArr = [
+<?php
+for ($i = 0; $i < $numOfQues; $i++) {
+    if ($i != $numOfQues - 1) {
+        echo $rs[$i] . ',';
+    } else {
+        echo $rs[$i];
+    }
+}
+?>
+        ]
+        document.getElementById('test').value = b.value;
+        event.preventDefault();
+        $.ajax({
+            url: '<?php echo base_url(); ?>asset/AJAX/testSelect.php',
+            dataType: 'html',
+            method: 'POST',
+            data: {
+                id: idArr[b.value]
+            },
+            success: function (Result) {
+                $('#result').html(Result);
+            }
+
+        });
+
+    });
+</script>

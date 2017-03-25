@@ -67,3 +67,4 @@ if (isset($this->session->userdata['logged_in'])) {
     </div>
     <?php echo form_close(); ?>
 <?php } ?>
+</div>

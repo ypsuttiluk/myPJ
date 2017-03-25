@@ -12,7 +12,6 @@ if (isset($this->session->userdata['logged_in'])) {
         $userType = $this->session->userdata['logged_in']['userType'];
         $userKey = $this->session->userdata['logged_in']['userKey'];
         $userID = $this->session->userdata['logged_in']['userID'];
-        $studentID = $this->session->userdata['logged_in']['studentID'];
         $userName = $this->session->userdata['logged_in']['userName'];
         $userPhone = $this->session->userdata['logged_in']['userPhone'];
         $userYear = $this->session->userdata['logged_in']['userYear'];
@@ -25,7 +24,7 @@ if (isset($this->session->userdata['logged_in'])) {
 }
 ?>
 <?php if (isset($this->session->userdata['logged_in']) && $userType == 's') { ?>
-    <?php //echo form_open("index.php/MainController/editExam/" . $examKey);                                           ?>
+    <?php //echo form_open("index.php/MainController/editExam/" . $examKey);                                            ?>
     <!-- Page Content -->
     <br>
     <div class="container">
@@ -68,3 +67,4 @@ if (isset($this->session->userdata['logged_in'])) {
     </div>
     <?php //echo form_close(); ?>
 <?php } ?>
+</div>

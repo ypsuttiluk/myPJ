@@ -37,7 +37,7 @@
     </head>
 
     <body>
-
+        
         <?php
         if (isset($this->session->userdata['logged_in'])) {
             if ($this->session->userdata['logged_in']['userType'] == 't') {
