@@ -41,11 +41,11 @@ if (count($ques) == 4) {
 } else {
 
     echo '<div class="col-md-6 col-sm-6" onclick="testTF(1)">';
-    echo '<input type="hidden" name="TF1" id="TF1" value="ถูก">';
+    echo '<input type="hidden" name="TF1" id="TF1" value="">';
     echo '<button type="button" class="btn btn-block" id="btn1" name="btnT" style="background:#E4FDDD; border:2px solid #7CC667">TRUE</button>';
     echo "</div>";
     echo '<div class="col-md-6 col-sm-6" onclick="testTF(2)">';
-    echo '<input type="hidden" name="TF2" id="2" value="ผิด">';
+    echo '<input type="hidden" name="TF2" id="TF2" value="">';
     echo '<button type="button" class="btn btn-block" id="btn2" name="btnT" style="background:#E4FDDD; border:2px solid #7CC667">FALSE</button>';
     echo "</div>";
 }
