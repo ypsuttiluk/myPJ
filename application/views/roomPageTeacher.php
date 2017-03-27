@@ -35,11 +35,12 @@ if (isset($this->session->userdata['logged_in'])) {
                             <div class="pull-right">
                                 <span><i class="glyphicon glyphicon-book fa-fw"></i>ชุดข้อสอบที่ใช้ : <?php echo $rs2[0]['examText']; ?></span>&nbsp;&nbsp;&nbsp;
                                 <span>
-                                    <i class="glyphicon glyphicon-signal fa-fw"></i>สถานะของห้อง : 
+                                    <i class="glyphicon glyphicon-signal fa-fw"></i>สถานะของห้อง : <button id='changeStatus'>OFFLINE</button>
                                     <?php if ($rs[0]['rStatus'] == 0) { ?>
-                                        <a href="<?php echo base_url(); ?>index.php/MainController/changeStatus/<?php echo $rs[0]['rKey']; ?>/0">OFFLINE</a>
+                                        <a href="<?php echo base_url(); ?>index.php/RoomController/changeStatus/<?php echo $rs[0]['rKey']; ?>/0"></a>
+
                                     <?php } else { ?>
-                                        <a href="<?php echo base_url(); ?>index.php/MainController/changeStatus/<?php echo $rs[0]['rKey']; ?>/1">ONLINE</a>
+                                        <a href="<?php echo base_url(); ?>index.php/RoomController/changeStatus/<?php echo $rs[0]['rKey']; ?>/1"></a>
                                     <?php } ?>
 
                                 </span>
@@ -52,15 +53,35 @@ if (isset($this->session->userdata['logged_in'])) {
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                            <h4 class="modal-title" id="myModalLabel">แก้ไขชื่อห้องเรียน</h4>
+                                            <h4 class="modal-title" id="myModalLabel">ตั้งค่าห้องเรียน</h4>
                                         </div>
-                                        <?php echo form_open("index.php/MainController/editRoom/" . $rs[0]['rKey'] . "/" . $userKey . "/" . $userType); ?>
+                                        <?php echo form_open("index.php/RoomController/editRoom/" . $rs[0]['rKey'] . "/" . $userKey . "/" . $userType); ?>
                                         <div class="modal-body">
                                             <input class="form-control" type="text" name="rName" placeholder="ชื่อห้องเรียน" value="<?php echo $rs[0]['rName']; ?>">
+                                            <br>
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <select name="exam[]" class="selectpicker form-control" data-width="100%" title="เลือกแบบทดสอบ..." data-size="5">
+                                                        <?php
+                                                        if ($haveExam == '0') {
+                                                            foreach ($exam as $r) {
+                                                                ?>
+                                                                <option data-icon="fa fa-file-text" value="<?php echo $r['examText']; ?>"><?php echo $r['examText']; ?></option>
+                                                                <?php
+                                                            }
+                                                        } else {
+                                                            ?>
+                                                            <option data-icon="fa fa-file-text" value="<?php echo $rs2['examText']; ?>" disabled><?php echo $rs2['examText']; ?></option>
+                                                            <?php
+                                                        }
+                                                        ?>
+                                                    </select>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
-                                            <!--<a href="<?php //echo base_url();                               ?>index.php/MainController/createChapter">-->
+                                            <!--<a href="<?php //echo base_url();                                                      ?>index.php/MainController/createChapter">-->
                                             <button type="submit" class="btn btn-primary" name="btnSave" value="btnSave">แก้ไขห้องเรียน</button><!--</a>-->
                                         </div>
                                         <?php echo form_close(); ?>
@@ -109,3 +130,12 @@ if (isset($this->session->userdata['logged_in'])) {
     </div>
 <?php } ?>
 </div>
+
+
+<!-- jQuery -->
+<script src="<?php echo base_url(); ?>asset/vendor/jquery/jquery.min.js"></script>
+<script>
+    $('#changeStatus').click(function () {
+        alert('asdsd');
+    });
+</script>

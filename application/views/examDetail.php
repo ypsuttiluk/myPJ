@@ -50,7 +50,7 @@ if (isset($this->session->userdata['logged_in'])) {
                                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                                             <h4 class="modal-title" id="myModalLabel">แก้ไขชื่อแบบทดสอบ</h4>
                                         </div>
-                                        <?php echo form_open("index.php/MainController/editExam/" . $examKey); ?>
+                                        <?php echo form_open("index.php/ExamController/editExam/" . $examKey); ?>
                                         <div class="modal-body">
                                             <input class="form-control" type="text" name="examText" placeholder="ชื่อแบบทดสอบ" value="<?php echo $examText; ?>">
                                         </div>
@@ -83,7 +83,7 @@ if (isset($this->session->userdata['logged_in'])) {
                                 foreach ($question as $result) {
                                     $questionText = $this->ExamModel->questionInExam($result);
                                     ?>
-                                    <a href="<?php echo base_url(); ?>index.php/MainController/editQuestion/NULL/<?php echo $questionText[0]['quesKey']; ?>/1" class="list-group-item">
+                                    <a href="<?php echo base_url(); ?>index.php/QuesController/editQuestion/NULL/<?php echo $questionText[0]['quesKey']; ?>/1" class="list-group-item">
                                         <i class="glyphicon glyphicon-question-sign fa-fw"></i> <?php echo $questionText[0]['quesText']; ?>
                                     </a>                                   
                                 <?php } ?>

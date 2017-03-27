@@ -49,8 +49,10 @@ if (isset($this->session->userdata['logged_in'])) {
 </div>
 </div>
 
-
+<!-- jQuery -->
+<script src="<?php echo base_url(); ?>asset/vendor/jquery/jquery.min.js"></script>
 <script>
+
     $(document).ready(function () {
         $.ajax({
             url: '<?php echo base_url(); ?>asset/AJAX/testSelect.php',

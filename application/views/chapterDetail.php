@@ -53,10 +53,10 @@ if (isset($this->session->userdata['logged_in'])) {
                                         </div>
                                         <div class="modal-body">
                                             <div class="col-md-6 col-sm-6">
-                                                <a href="<?php echo base_url(); ?>index.php/MainController/createQuestion/<?php echo $chapterKey; ?>/MC" style="color: #261D1D"><button type="button" class="btn btn-block" style="background:#EDDDA6; border:2px solid #e8c400">คำถามหลายตัวเลือก</button></a>
+                                                <a href="<?php echo base_url(); ?>index.php/QuesController/createQuestion/<?php echo $chapterKey; ?>/MC" style="color: #261D1D"><button type="button" class="btn btn-block" style="background:#EDDDA6; border:2px solid #e8c400">คำถามหลายตัวเลือก</button></a>
                                             </div>
                                             <div class="col-md-6 col-sm-6">
-                                                <a href="<?php echo base_url(); ?>index.php/MainController/createQuestion/<?php echo $chapterKey; ?>/TF" style="color: #261D1D"><button type="button" class="btn btn-block" style="background:#B3ABCC; border:2px solid #8c6fcc">คำถามเลือกถูก/ผิด</button></a>
+                                                <a href="<?php echo base_url(); ?>index.php/QuesController/createQuestion/<?php echo $chapterKey; ?>/TF" style="color: #261D1D"><button type="button" class="btn btn-block" style="background:#B3ABCC; border:2px solid #8c6fcc">คำถามเลือกถูก/ผิด</button></a>
                                             </div>
                                             <br>
                                             <br>
@@ -76,7 +76,7 @@ if (isset($this->session->userdata['logged_in'])) {
                                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                                             <h4 class="modal-title" id="myModalLabel">แก้ไขบทเรียน</h4>
                                         </div>
-                                        <?php echo form_open("index.php/MainController/editChapter/" . $chapterKey); ?>
+                                        <?php echo form_open("index.php/ChapterController/editChapter/" . $chapterKey); ?>
                                         <div class="modal-body">
                                             <input class="form-control" type="text" name="chapterName" id="chapterName" placeholder="ชื่อบทเรียน" value="<?php echo $chapterName; ?>">
                                         </div>
@@ -99,7 +99,7 @@ if (isset($this->session->userdata['logged_in'])) {
                         <div class="panel-body"> 
                             <div class="list-group">
                                 <?php foreach ($rs as $r) { ?>
-                                    <a href="<?php echo base_url(); ?>index.php/MainController/editQuestion/<?php echo $chapterKey; ?>/<?php echo $r['quesKey']; ?>/0" class="list-group-item">
+                                    <a href="<?php echo base_url(); ?>index.php/QuesController/editQuestion/<?php echo $chapterKey; ?>/<?php echo $r['quesKey']; ?>/0" class="list-group-item">
                                         <!--<a href="#" class="list-group-item">  -->     
                                         <i class="glyphicon glyphicon-question-sign fa-fw"></i> <?php echo $r['quesText']; ?>
                                     </a>

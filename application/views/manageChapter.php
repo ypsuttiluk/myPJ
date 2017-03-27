@@ -45,7 +45,7 @@ if (isset($this->session->userdata['logged_in'])) {
                                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                                             <h4 class="modal-title" id="myModalLabel">เพิ่มบทเรียน</h4>
                                         </div>
-                                        <?php echo form_open("index.php/MainController/createChapter/" . $userKey); ?>
+                                        <?php echo form_open("index.php/ChapterController/createChapter/" . $userKey); ?>
                                         <div class="modal-body">
                                             <input class="form-control" type="text" name="chapterName" id="chapterName" placeholder="ชื่อบทเรียน" autofocus>
                                         </div>
@@ -66,7 +66,7 @@ if (isset($this->session->userdata['logged_in'])) {
                         <div class="panel-body"> 
                             <div class="list-group">
                                 <?php foreach ($rs as $r) { ?>
-                                    <a href="<?php echo base_url(); ?>index.php/MainController/chapterDetail/<?php echo $r['chapterKey']; ?>" class="list-group-item">
+                                    <a href="<?php echo base_url(); ?>index.php/ChapterController/chapterDetail/<?php echo $r['chapterKey']; ?>" class="list-group-item">
                                         <i class="glyphicon glyphicon-book fa-fw"></i> <?php echo $r['chapterName']; ?>
                                     </a>
                                 <?php } ?>

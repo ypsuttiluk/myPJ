@@ -45,7 +45,7 @@ if (isset($this->session->userdata['logged_in'])) {
                         <div class="panel-body"> 
                             <div class="list-group">
                                 <?php foreach ($rs as $r) { ?>
-                                    <a href="<?php echo base_url(); ?>index.php/MainController/joinToRoom/<?php echo $r['rKey']; ?>/<?php echo $userKey; ?>" class="list-group-item">
+                                    <a href="<?php echo base_url(); ?>index.php/RoomController/joinToRoom/<?php echo $r['rKey']; ?>/<?php echo $userKey; ?>" class="list-group-item">
                                         <!--<a href="#" class="list-group-item">  -->     
                                         <i class="glyphicon glyphicon-download fa-fw"></i> <?php echo $r['rName']; ?>
                                         <?php if ($r['rStatus'] == 0) { ?>

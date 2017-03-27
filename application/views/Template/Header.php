@@ -87,18 +87,18 @@
                                 <a href="<?php //echo base_url();        ?>index.php/MainController/roomDetail/<?php //echo $userKey;        ?>">ห้องเรียน</a>
                             </li> -->
                             <li>
-                                <a href="<?php echo base_url(); ?>index.php/MainController/roomDetail/<?php echo $userKey; ?>/<?php echo $userType; ?>">ห้องเรียน</a>
+                                <a href="<?php echo base_url(); ?>index.php/RoomController/roomDetail/<?php echo $userKey; ?>/<?php echo $userType; ?>">ห้องเรียน</a>
                             </li>
                             <li>
-                                <a href="<?php echo base_url(); ?>index.php/MainController/manageChapter/<?php echo $userKey; ?>">บทเรียน</a>
+                                <a href="<?php echo base_url(); ?>index.php/ChapterController/manageChapter/<?php echo $userKey; ?>">บทเรียน</a>
                             </li>
                             <li>
-                                <a href="<?php echo base_url(); ?>index.php/MainController/manageExam/<?php echo $userKey; ?>">แบบทดสอบ</a>
+                                <a href="<?php echo base_url(); ?>index.php/ExamController/manageExam/<?php echo $userKey; ?>">แบบทดสอบ</a>
                             </li>
                         <?php } ?>
                         <?php if (isset($this->session->userdata['logged_in']) && $userType == 's') { ?>
                             <li>
-                                <a href="<?php echo base_url(); ?>index.php/MainController/roomDetail/<?php echo $userKey; ?>/<?php echo $userType; ?>">ห้องเรียน</a>
+                                <a href="<?php echo base_url(); ?>index.php/RoomController/roomDetail/<?php echo $userKey; ?>/<?php echo $userType; ?>">ห้องเรียน</a>
                             </li>
                         <?php } ?>
                         <li class="dropdown">

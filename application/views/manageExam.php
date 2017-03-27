@@ -46,7 +46,7 @@ if (isset($this->session->userdata['logged_in'])) {
                                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                                             <h4 class="modal-title" id="myModalLabel">สร้างแบบทดสอบ</h4>
                                         </div>
-                                        <?php echo form_open('index.php/MainController/createExam/' . $userKey); ?>
+                                        <?php echo form_open('index.php/ExamController/createExam/' . $userKey); ?>
                                         <div class="modal-body">
                                             <input type="text" class="form-control" name="examText" placeholder="ชื่อแบบทดสอบ" autofocus>
                                             <br>
@@ -81,7 +81,7 @@ if (isset($this->session->userdata['logged_in'])) {
 
                             <div class="list-group">
                                 <?php foreach ($rs as $r) { ?>
-                                    <a href="<?php echo base_url(); ?>index.php/MainController/examDetail/<?php echo $r['examKey']; ?>" class="list-group-item">
+                                    <a href="<?php echo base_url(); ?>index.php/ExamController/examDetail/<?php echo $r['examKey']; ?>" class="list-group-item">
                                         <i class="fa fa-file-text fa-fw"></i> <?php echo $r['examText']; ?>
                                     </a>
                                 <?php } ?>

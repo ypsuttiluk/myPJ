@@ -34,7 +34,7 @@ if (count($ques) == 4) {
         echo '<span class="input-group-addon">#' . $i . '</span>';
         echo '<input type="text" class="form-control" id="ansT' . $i . '" name="ansT' . $i . '" value="' . $ques[$i - 1] . '" readonly>';
         echo '<input type="hidden" name="C' . $i . '" value="ผิด" id="C' . $i . '">';
-        echo '<span class="input-group-addon fa-fw" style="cursor: pointer" onclick="testMC(' . $i . ')" id="ans' . $i . '" name="ans' . $i . '">ผิด</span>';
+        echo '<span class="input-group-addon fa-fw" style="cursor: pointer" onclick="testMC(' . $i . ')" id="ans' . $i . '" name="ans' . $i . '"><i class="glyphicon glyphicon-unchecked"></i></span>';
         echo "</div>";
     }
     echo '</form>';

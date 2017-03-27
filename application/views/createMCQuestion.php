@@ -25,7 +25,7 @@ if (isset($this->session->userdata['logged_in'])) {
 }
 ?>
 <?php if (isset($this->session->userdata['logged_in']) && $userType == 't') { ?>
-    <?php echo form_open("index.php/MainController/createMCQuestion/" . $chapterKey); ?>
+    <?php echo form_open("index.php/QuesController/createMCQuestion/" . $chapterKey); ?>
     <!-- Page Content -->
     <br>
     <div class="container">
