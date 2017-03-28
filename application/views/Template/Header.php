@@ -37,7 +37,7 @@
     </head>
 
     <body>
-        
+
         <?php
         if (isset($this->session->userdata['logged_in'])) {
             if ($this->session->userdata['logged_in']['userType'] == 't') {
@@ -84,7 +84,7 @@
 
                         <?php if (isset($this->session->userdata['logged_in']) && $userType == 't') { ?>
                             <!--<li>
-                                <a href="<?php //echo base_url();        ?>index.php/MainController/roomDetail/<?php //echo $userKey;        ?>">ห้องเรียน</a>
+                                <a href="<?php //echo base_url();         ?>index.php/MainController/roomDetail/<?php //echo $userKey;         ?>">ห้องเรียน</a>
                             </li> -->
                             <li>
                                 <a href="<?php echo base_url(); ?>index.php/RoomController/roomDetail/<?php echo $userKey; ?>/<?php echo $userType; ?>">ห้องเรียน</a>
@@ -94,6 +94,9 @@
                             </li>
                             <li>
                                 <a href="<?php echo base_url(); ?>index.php/ExamController/manageExam/<?php echo $userKey; ?>">แบบทดสอบ</a>
+                            </li>
+                            <li>
+                                <a href="<?php echo base_url(); ?>index.php/MainController"><b id='welcome'><i><?php echo $userName;?></i></b></a>
                             </li>
                         <?php } ?>
                         <?php if (isset($this->session->userdata['logged_in']) && $userType == 's') { ?>

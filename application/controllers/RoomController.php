@@ -47,7 +47,7 @@ class RoomController extends CI_Controller {
                 redirect('index.php/RoomController/roomDetail/' . $sKey . '/s', 'refresh');
                 exit();
             }
-        } else if ($result[0]['rKey'] == $rKey) {
+        } else if ($result[0]['rKey'] == $rKey && $rs[0]['rStatus'] == 1) {
             $data['page'] = 'testDoExam';
             //$data['page'] = 'roomPageStudent';
             $this->load->view('Template/template', $data);
@@ -90,7 +90,6 @@ class RoomController extends CI_Controller {
                     $data['haveExam'] = '1';
                     $sql2 = "select examText from examinationdim where examKey = " . $examKey;
                     $data['rs2'] = $this->ExamModel->getData($sql2);
-
                     $sql3 = "select * from studentdim where rKey = " . $rKey;
                     $data['rs3'] = $this->ExamModel->getData($sql3);
                 }

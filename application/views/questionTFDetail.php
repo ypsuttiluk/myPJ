@@ -25,7 +25,7 @@ if (isset($this->session->userdata['logged_in'])) {
 }
 ?>
 <?php if (isset($this->session->userdata['logged_in']) && $userType == 't') { ?>
-    <?php //echo form_open("index.php/MainController/editTFQuestion/" . $chapterKey . '/' . $quesKey . '/' . $rs['0']['ansKey'] . '/' . $rs['1']['ansKey']);                ?>
+    <?php //echo form_open("index.php/MainController/editTFQuestion/" . $chapterKey . '/' . $quesKey . '/' . $rs['0']['ansKey'] . '/' . $rs['1']['ansKey']);                    ?>
     <!-- Page Content -->
     <br>
     <div class="container">
@@ -37,10 +37,12 @@ if (isset($this->session->userdata['logged_in'])) {
                             <div class="pull-right" style="cursor: pointer">
                                 <span onclick="goBack()"><i class="glyphicon glyphicon-circle-arrow-left fa-fw"></i>กลับ</span>
                             </div>
-                            <i class="fa fa-check-circle"></i><i class="fa fa-times-circle fa-fw"></i> TRUE/FALSE : <?php echo $quesText; ?>
+                            <i class="fa fa-check-circle"></i><i class="fa fa-times-circle fa-fw"></i> TRUE/FALSE
                         </div>
                         <!-- /.panel-heading -->
-                        <div class="panel-body"> 
+                        <div class="panel-body">
+                            <h5>คำถาม</h5>
+                            <input class="form-control" value="<?php echo $quesText; ?>" readonly>
                             <h5>คำตอบ</h5>
                             <div class="form-group">
                                 <div class="col-md-6 col-sm-6">

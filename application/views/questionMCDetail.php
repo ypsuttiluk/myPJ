@@ -37,10 +37,12 @@ if (isset($this->session->userdata['logged_in'])) {
                             <div class="pull-right" style="cursor: pointer">
                                 <span onclick="goBack()"><i class="glyphicon glyphicon-circle-arrow-left fa-fw"></i>กลับ</span>  
                             </div>
-                            <i class="fa fa-list-ol fa-fw"></i> MULTIPLE CHOICE : <?php echo $quesText; ?>
+                            <i class="fa fa-list-ol fa-fw"></i> MULTIPLE CHOICE
                         </div>
                         <!-- /.panel-heading -->
-                        <div class="panel-body"> 
+                        <div class="panel-body">
+                            <h5>คำถาม</h5>
+                            <input class="form-control" value="<?php echo $quesText; ?>" readonly>
                             <h5>คำตอบ</h5>
                             <div class="form-group">
                                 <form role="form">

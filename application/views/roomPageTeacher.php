@@ -81,7 +81,7 @@ if (isset($this->session->userdata['logged_in'])) {
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
-                                            <!--<a href="<?php //echo base_url();                                                      ?>index.php/MainController/createChapter">-->
+                                            <!--<a href="<?php //echo base_url();                                                                              ?>index.php/MainController/createChapter">-->
                                             <button type="submit" class="btn btn-primary" name="btnSave" value="btnSave">แก้ไขห้องเรียน</button><!--</a>-->
                                         </div>
                                         <?php echo form_close(); ?>
@@ -95,6 +95,7 @@ if (isset($this->session->userdata['logged_in'])) {
                         <div class="panel-body">
 
                             <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables">
+
                                 <thead>
                                     <tr>
                                         <th>รหัสนักศึกษา</th>
@@ -105,17 +106,23 @@ if (isset($this->session->userdata['logged_in'])) {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php foreach ($rs3 as $row) { ?>
-                                        <tr>
-                                            <td><?php echo $row['sID']; ?></td>
-                                            <td><?php echo $row['sName']; ?></td>
-                                            <td>6</td>
-                                            <td class="center">5</td>
-                                            <td class="center">อยู่ระหว่างการทดสอบ</td>
-                                        </tr>
-                                    <?php } ?>
+                                    <?php
+                                    foreach ($rs3 as $row) {
+                                        echo '<tr>';
+                                        echo '<td>' . $row['sID'] . '</td>';
+                                        echo '<td>' . $row['sName'] . '</td>';
+                                        echo '<td>6</td>';
+                                        echo '<td class="center">5</td>';
+                                        echo '<td class="center">อยู่ระหว่างการทดสอบ</td>';
+                                        echo '</tr>';
+                                    }
+                                    ?>
+
                                 </tbody>
+
                             </table>
+
+
                             <!-- /.table-responsive -->
                         </div>
                         <!-- /.panel-body -->
@@ -135,7 +142,19 @@ if (isset($this->session->userdata['logged_in'])) {
 <!-- jQuery -->
 <script src="<?php echo base_url(); ?>asset/vendor/jquery/jquery.min.js"></script>
 <script>
+    $(document).ready(function () {
+ 
+
+        setInterval(function () {
+            Window.location.href = 
+        }, 3000);
+    });
+
     $('#changeStatus').click(function () {
-        alert('asdsd');
+        if ($('#changeStatus').text() == 'OFFLINE') {
+            $('#changeStatus').html('ONLINE');
+        } else {
+            $('#changeStatus').html('OFFLINE');
+        }
     });
 </script>

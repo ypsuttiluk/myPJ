@@ -25,7 +25,7 @@ if (isset($this->session->userdata['logged_in'])) {
 }
 ?>
 <?php if (isset($this->session->userdata['logged_in']) && $userType == 't') { ?>
-    <?php //echo form_open("MainController/manageExam");         ?>
+    <?php //echo form_open("MainController/manageExam");                         ?>
     <!-- Page Content -->
     <br>
     <div class="container">
@@ -54,17 +54,23 @@ if (isset($this->session->userdata['logged_in'])) {
                                             <br>
                                             <div class="row">
                                                 <div class="col-xs-12">
-                                                    <select name="chapter[]" class="selectpicker form-control" multiple data-width="100%" title="เลือกคำถามจากบทเรียน..." data-size="5" >
+                                                    <select name="chapter[]" class="selectpicker form-control" multiple data-width="100%" title="เลือกคำถามจากบทเรียน..." data-size="5">
                                                         <?php foreach ($rs2 as $r) { ?>
                                                             <option data-icon="glyphicon-book" value="<?php echo $r['chapterKey']; ?>"><?php echo $r['chapterName']; ?></option>
                                                         <?php } ?>
                                                     </select>
                                                 </div>
+                                                
                                             </div>
+                                            <br>
+                                            
+
+
+
                                         </div> 
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
-                                            <!--<a href="<?php //echo base_url();                                                           ?>index.php/MainController/createChapter">-->
+                                            <!--<a href="<?php //echo base_url();                                                                           ?>index.php/MainController/createChapter">-->
                                             <button type="submit" class="btn btn-primary" name="btnSave" value="btnSave">สร้างแบบทดสอบ</button><!--</a>-->
                                         </div>
                                         <?php echo form_close(); ?>
@@ -87,6 +93,10 @@ if (isset($this->session->userdata['logged_in'])) {
                                 <?php } ?>
                             </div>
 
+                            <p id='demo'>
+
+                            </p>
+
                         </div>
                         <!-- /.row -->
                     </div>
@@ -99,3 +109,6 @@ if (isset($this->session->userdata['logged_in'])) {
     <?php //echo form_close(); ?>
 <?php } ?>
 </div>
+
+
+
