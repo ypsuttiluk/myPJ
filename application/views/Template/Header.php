@@ -31,7 +31,27 @@
                 background: #222222;
                 font-family: 'Lato', sans-serif;
             }
+            .form-group input[type="checkbox"] {
+                display: none;
+            }
 
+            .form-group input[type="checkbox"] + .btn-group > label span {
+                width: 20px;
+            }
+
+            .form-group input[type="checkbox"] + .btn-group > label span:first-child {
+                display: none;
+            }
+            .form-group input[type="checkbox"] + .btn-group > label span:last-child {
+                display: inline-block;   
+            }
+
+            .form-group input[type="checkbox"]:checked + .btn-group > label span:first-child {
+                display: inline-block;
+            }
+            .form-group input[type="checkbox"]:checked + .btn-group > label span:last-child {
+                display: none;   
+            }
         </style>
 
     </head>
@@ -84,7 +104,7 @@
 
                         <?php if (isset($this->session->userdata['logged_in']) && $userType == 't') { ?>
                             <!--<li>
-                                <a href="<?php //echo base_url();         ?>index.php/MainController/roomDetail/<?php //echo $userKey;         ?>">ห้องเรียน</a>
+                                <a href="<?php //echo base_url();           ?>index.php/MainController/roomDetail/<?php //echo $userKey;           ?>">ห้องเรียน</a>
                             </li> -->
                             <li>
                                 <a href="<?php echo base_url(); ?>index.php/RoomController/roomDetail/<?php echo $userKey; ?>/<?php echo $userType; ?>">ห้องเรียน</a>
@@ -96,12 +116,15 @@
                                 <a href="<?php echo base_url(); ?>index.php/ExamController/manageExam/<?php echo $userKey; ?>">แบบทดสอบ</a>
                             </li>
                             <li>
-                                <a href="<?php echo base_url(); ?>index.php/MainController"><b id='welcome'><i><?php echo $userName;?></i></b></a>
+                                <a href="<?php echo base_url(); ?>index.php/MainController"><b id='welcome'><i><?php echo $userName; ?></i></b></a>
                             </li>
                         <?php } ?>
                         <?php if (isset($this->session->userdata['logged_in']) && $userType == 's') { ?>
                             <li>
                                 <a href="<?php echo base_url(); ?>index.php/RoomController/roomDetail/<?php echo $userKey; ?>/<?php echo $userType; ?>">ห้องเรียน</a>
+                            </li>
+                            <li>
+                                <a href="<?php echo base_url(); ?>index.php/MainController"><b id='welcome'><i><?php echo $userName; ?></i></b></a>
                             </li>
                         <?php } ?>
                         <li class="dropdown">

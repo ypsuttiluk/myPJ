@@ -47,6 +47,14 @@ class MainController extends CI_Controller {
                     'userPhone' => $result[0]['tPhone'],
                     'userRoom' => $result[0]['tRoom']
                 );
+
+                $sql = 'select rKey from roomdim where tKey = ' . $result[0]['tKey'];
+                $rs = $this->ExamModel->getData($sql);
+                if (count($rs) == 0) {
+                    $pass = $this->ExamModel->incrementalHash();
+                    $sql = 'insert into roomdim(rName,rPassword,rStatus,tKey) value ("' . $result[0]['tName'] . '","' . $pass . '", 0, ' . $result[0]['tKey'] . ')';
+                    $this->ExamModel->QueryBySQL($sql);
+                }
             }
             if ($chkUser[0] == 'S' || $chkUser[0] == 's') {
                 $session_data = array(
@@ -58,9 +66,15 @@ class MainController extends CI_Controller {
                     'userPhone' => $result[0]['sPhone'],
                     'userYear' => $result[0]['sYear'],
                     'userDegree' => $result[0]['sDegree']
+                    
                 );
             }
             $this->session->set_userdata('logged_in', $session_data);
+
+
+//            if (count($rs) == 0) {
+//                $sql1 = 'insert into roomdim(rName,rPassword,tKey) value(rName="'.$result[0]['tName'].'",rPassword = "")'
+//            }
             redirect('index.php/MainController', 'refresh');
             exit();
         } else {

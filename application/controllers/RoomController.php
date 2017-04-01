@@ -8,27 +8,51 @@ class RoomController extends CI_Controller {
         parent::__construct();
     }
 
+    public function createRoom($rKey) {
+        if ($this->input->post('btnCreRoom')) {
+            $arr = array(
+                'nameOfExam' => $this->input->post('nameOfExam'),
+                'examKey' => $this->input->post('examInRoom'),
+                'time' => $this->input->post('time')
+            );
+
+            $sql = 'update roomdim set rStatus = 1,nameOfExam = "' . $arr['nameOfExam'] . '",examKey = ' . $arr['examKey'] . ',time = "' . $arr['time'] . '" where rKey = ' . $rKey;
+            $this->ExamModel->QueryBySQL($sql);
+
+            redirect('index.php/RoomController/roomDetail/' . $rKey . '/t', 'refresh');
+        }
+    }
+
     public function changeStatus($rKey, $rStatus) {
         if ($rStatus == 0) {
             $sql = 'update roomdim set rStatus = 1 where rKey = ' . $rKey;
         } else {
-            $sql = 'update roomdim set rStatus = 0,examKey = NULL where rKey = ' . $rKey;
+            $sql = 'update roomdim set rStatus = 0,examKey = NULL,nameOfExam = "",time = "" where rKey = ' . $rKey;
             $sql2 = 'update studentdim set rKey = NULL where rKey = ' . $rKey;
             $this->ExamModel->QueryBySQL($sql2);
         }
         $this->ExamModel->QueryBySQL($sql);
-        redirect('index.php/RoomController/roomDetail/' . $rKey . '/t', 'refresh');
+        redirect('index.php/MainController', 'refresh');
+        exit();
+    }
+
+    public function addStudentToRoom($rKey, $userKey) {
+        $sql = 'update studentdim set rKey = ' . $rKey . ' where sKey = ' . $userKey;
+        $this->ExamModel->QueryBySQL($sql);
+        redirect('index.php/RoomController/joinToRoom/' . $rKey . '/' . $userKey, 'refresh');
         exit();
     }
 
     public function joinToRoom($rKey, $sKey) {
         $sql1 = 'select rKey from studentdim where sKey = ' . $sKey;
-        $result = $this->ExamModel->getData($sql1);
-        $sql2 = 'select rStatus from roomdim where rKey = ' . $rKey;
+        $data['result'] = $this->ExamModel->getData($sql1);
+        $sql2 = 'select * from roomdim where rKey = ' . $rKey;
         $rs = $this->ExamModel->getData($sql2);
-
+        $data['room'] = $rs;
         $sql3 = 'select questionKey from examinationdim where examKey = (select examKey from roomDim where rKey = ' . $rKey . ')';
         $questionKey = $this->ExamModel->getData($sql3);
+        $sql4 = 'select tempKey from temp where sKey = ' . $sKey;
+        $data['temp'] = $this->ExamModel->getData($sql4);
         //test again by noy use github in desktop
         if (count($questionKey) != 0) {
             $quesID = explode(',', $questionKey[0]['questionKey']);
@@ -36,25 +60,27 @@ class RoomController extends CI_Controller {
             $data['rs'] = $quesID;
             $data['numOfQues'] = count($quesID);
         }
-        if ($result[0]['rKey'] == NULL) {
-            if ($rs[0]['rStatus'] == 1) {
-                $sql = 'update studentdim set rKey = ' . $rKey . ' where sKey = ' . $sKey;
-                $this->ExamModel->QueryBySQL($sql);
-                $data['page'] = 'testDoExam';
-                //$data['page'] = 'roomPageStudent';
-                $this->load->view('Template/template', $data);
-            } else {
-                redirect('index.php/RoomController/roomDetail/' . $sKey . '/s', 'refresh');
-                exit();
-            }
-        } else if ($result[0]['rKey'] == $rKey && $rs[0]['rStatus'] == 1) {
-            $data['page'] = 'testDoExam';
-            //$data['page'] = 'roomPageStudent';
-            $this->load->view('Template/template', $data);
-        } else {
-            redirect('index.php/RoomController/roomDetail/' . $sKey . '/s', 'refresh');
-            exit();
-        }
+        $data['page'] = 'testDoExam';
+        $this->load->view('Template/template', $data);
+//        if ($result[0]['rKey'] == NULL) {
+//            if ($rs[0]['rStatus'] == 1) {
+//                $sql = 'update studentdim set rKey = ' . $rKey . ' where sKey = ' . $sKey;
+//                $this->ExamModel->QueryBySQL($sql);
+//                $data['page'] = 'testDoExam';
+//                //$data['page'] = 'roomPageStudent';
+//                $this->load->view('Template/template', $data);
+//            } else {
+//                redirect('index.php/RoomController/roomDetail/' . $sKey . '/s', 'refresh');
+//                exit();
+//            }
+//        } else if ($result[0]['rKey'] == $rKey && $rs[0]['rStatus'] == 1) {
+//            $data['page'] = 'testDoExam';
+//            //$data['page'] = 'roomPageStudent';
+//            $this->load->view('Template/template', $data);
+//        } else {
+//            redirect('index.php/RoomController/roomDetail/' . $sKey . '/s', 'refresh');
+//            exit();
+//        }
     }
 
     public function editRoom($rKey, $userKey, $userType) {

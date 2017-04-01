@@ -51,7 +51,8 @@ if (isset($this->session->userdata['logged_in'])) {
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
-                                            <!--<a href="<?php //echo base_url();                ?>index.php/MainController/createChapter">--><button type="submit" class="btn btn-primary" name="btnSave" value="btnSave">บันทึกบทเรียน</button><!--</a>-->
+                                            <!--<a href="<?php //echo base_url();?>index.php/MainController/createChapter">-->
+                                            <button type="submit" class="btn btn-primary" name="btnSave" value="btnSave">บันทึกบทเรียน</button><!--</a>-->
                                         </div>
                                         <?php echo form_close(); ?>
                                     </div>

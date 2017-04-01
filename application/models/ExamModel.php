@@ -38,7 +38,7 @@ class ExamModel extends CI_Model {
     }
 
     public function questionInExam($quesKey) {
-        $sql = 'select quesKey,quesText from questiondim where quesKey = ' . $quesKey;
+        $sql = 'select quesKey,quesText,chapterKey from questiondim where quesKey = ' . $quesKey;
         $rs = $this->db->query($sql);
         return $rs->result_array();
     }
@@ -82,6 +82,20 @@ class ExamModel extends CI_Model {
     public function updateToExam($exam, $examKey) {
         $this->db->where('examKey', $examKey);
         $this->db->update('examinationdim', $exam);
+    }
+
+    public function incrementalHash() {
+        $Caracteres = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMOPQRSTUVXWYZ0123456789';
+        $QuantidadeCaracteres = strlen($Caracteres);
+        $QuantidadeCaracteres--;
+
+        $Hash = NULL;
+        for ($x = 1; $x <= 5; $x++) {
+            $Posicao = rand(0, $QuantidadeCaracteres);
+            $Hash .= substr($Caracteres, $Posicao, 1);
+        }
+
+        return $Hash;
     }
 
 //put your code here

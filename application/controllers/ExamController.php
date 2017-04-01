@@ -10,21 +10,23 @@ class ExamController extends CI_Controller {
 
     public function createExam($userKey) {
         if ($this->input->post('btnSave')) {
-            $chapter['chapter'] = $this->input->post('chapter');
+            $chapter = array();
+            if ($this->input->post('chapter')) {
+                $chapter = $this->input->post('chapter');
+            }
             $numOfQuestion = $this->input->post('numberOfQues');
-            $numOfChapter = count($chapter, COUNT_RECURSIVE);
-            $chap = '';
-            $text = 'chapterKey = ';
-            for ($i = 0; $i < $numOfChapter - 1; $i++) {
-                $chap = $chap . $text . $chapter['chapter'][$i];
-                if ($i < $numOfChapter - 2) {
-                    $chap = $chap . ' or ';
+
+            $text = '';
+            $union = 'UNION';
+            for ($i = 0; $i < count($numOfQuestion); $i++) {
+                $text = $text . '(select * from questiondim where chapterKey = ' . $chapter[$i] . ' order by RAND() limit ' . $numOfQuestion[$i] . ')';
+                if($i!=  count($numOfQuestion)-1){
+                    $text = $text.$union;
                 }
             }
-            $condition = 'where ' . $chap;
-            $sql = 'select * from questiondim ' . $condition . ' order by RAND() limit ' . $numOfQuestion;
+            
+            $sql = $text;
             $result = $this->ExamModel->getData($sql);
-
             $quesKey = '';
             foreach ($result as $r) {
                 $quesKey = $quesKey . $r['quesKey'] . ',';

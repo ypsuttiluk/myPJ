@@ -25,7 +25,7 @@ if (isset($this->session->userdata['logged_in'])) {
 }
 ?>
 <?php if (isset($this->session->userdata['logged_in']) && $userType == 't') { ?>
-    <?php //echo form_open("MainController/manageExam");                         ?>
+
     <!-- Page Content -->
     <br>
     <div class="container">
@@ -48,29 +48,54 @@ if (isset($this->session->userdata['logged_in'])) {
                                         </div>
                                         <?php echo form_open('index.php/ExamController/createExam/' . $userKey); ?>
                                         <div class="modal-body">
-                                            <input type="text" class="form-control" name="examText" placeholder="ชื่อแบบทดสอบ" autofocus>
+                                            <input type="text" class="form-control" name="examText" placeholder="ชื่อแบบทดสอบ" autofocus required="">
                                             <br>
-                                            <input type="number" class="form-control" name="numberOfQues" placeholder="จำนวนคำถาม" maxlength="2" min="1" max="20" oninput="maxLengthCheck(this)">
-                                            <br>
-                                            <div class="row">
-                                                <div class="col-xs-12">
-                                                    <select name="chapter[]" class="selectpicker form-control" multiple data-width="100%" title="เลือกคำถามจากบทเรียน..." data-size="5">
-                                                        <?php foreach ($rs2 as $r) { ?>
-                                                            <option data-icon="glyphicon-book" value="<?php echo $r['chapterKey']; ?>"><?php echo $r['chapterName']; ?></option>
+
+                                            <h4>โปรดเลือกคำถามจากบทเรียน...</h4><hr>
+                                            <?php
+                                            for ($i = 0; $i < count($rs2); $i++) {
+                                                $sql = 'select * from questiondim where chapterKey = ' . $rs2[$i]['chapterKey'];
+                                                $ar = $this->ExamModel->getData($sql);
+                                                ?>
+                                                <div class='row'>
+                                                    <div class="form-group col-xs-8">
+                                                        <?php if (count($ar) > 0) { ?>
+                                                            <input type="checkbox" value='<?php echo $rs2[$i]['chapterKey']; ?>' name="chapter[]" id="fancy-checkbox-primary<?php echo $i; ?>" autocomplete="off" onchange="allowText(<?php echo $i; ?>)">
+                                                        <?php } else { ?>
+                                                            <input type="checkbox" value='<?php echo $rs2[$i]['chapterKey']; ?>' name="chapter[]" id="fancy-checkbox-primary<?php echo $i; ?>" autocomplete="off" onchange="allowText(<?php echo $i; ?>)" disabled>
                                                         <?php } ?>
-                                                    </select>
+                                                        <div class="btn-group">
+                                                            <label for="fancy-checkbox-primary<?php echo $i; ?>" class="btn btn-info">
+                                                                <span class="glyphicon glyphicon-ok"></span>
+                                                                <span></span>
+                                                            </label>
+                                                            <label class="btn btn-default active">
+                                                                <?php echo $rs2[$i]['chapterName']; ?>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+
+                                                    <?php if (count($ar) > 0) { ?>
+                                                        <div class="form-group col-xs-1" style="padding-top:8px">
+                                                            จำนวน
+                                                        </div>
+                                                        <div class="form-group col-xs-2">
+                                                            <input id='inputText<?php echo $i; ?>' type="number" class="form-control" maxlength="2" min="1" max="<?php echo count($ar); ?>" oninput="maxLengthCheck(this)" disabled value="" name = 'numberOfQues[]'>
+                                                        </div>
+                                                        <div class="form-group col-xs-1" style="padding-top:8px">
+                                                            ข้อ
+                                                        </div>
+                                                    <?php } else { ?>
+                                                        <div class="form-group col-xs-4" style="padding-top:8px">
+                                                            ไม่มีคำถามในบทเรียนนี้
+                                                        </div>
+                                                    <?php } ?>
                                                 </div>
-                                                
-                                            </div>
-                                            <br>
-                                            
-
-
-
+                                            <?php } ?>
                                         </div> 
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
-                                            <!--<a href="<?php //echo base_url();                                                                           ?>index.php/MainController/createChapter">-->
+                                            <!--<a href="<?php //echo base_url();                                                                                                              ?>index.php/MainController/createChapter">-->
                                             <button type="submit" class="btn btn-primary" name="btnSave" value="btnSave">สร้างแบบทดสอบ</button><!--</a>-->
                                         </div>
                                         <?php echo form_close(); ?>
@@ -93,9 +118,7 @@ if (isset($this->session->userdata['logged_in'])) {
                                 <?php } ?>
                             </div>
 
-                            <p id='demo'>
 
-                            </p>
 
                         </div>
                         <!-- /.row -->
@@ -106,7 +129,7 @@ if (isset($this->session->userdata['logged_in'])) {
             </div>
         </div>
     </div>
-    <?php //echo form_close(); ?>
+    <?php //echo form_close();    ?>
 <?php } ?>
 </div>
 
