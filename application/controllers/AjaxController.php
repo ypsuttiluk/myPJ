@@ -28,7 +28,7 @@ class AjaxController extends CI_Controller {
 
         echo "<div class='panel-heading'>";
         echo '<div class="pull-right" style="cursor: pointer">';
-        echo '<span><i class="glyphicon glyphicon-send fa-fw"></i>ส่งแบบทดสอบ</span>';
+        echo '<span onclick="btnFinish(0)"><i class="glyphicon glyphicon-send fa-fw"></i>ส่งแบบทดสอบ</span>';
         echo '</div>';
         echo $nameExam[0]['nameOfExam'];
         echo "</div>";
@@ -87,42 +87,75 @@ class AjaxController extends CI_Controller {
                     echo '<button type="button" class="btn btn-block" id="btn2" name="btnF" style="background:#E4FDDD; border:2px solid #7CC667">FALSE</button>';
                 }
             } else {
-                echo '<button type="button" class="btn btn-block" id="btn2" name="btnF" style="background:#E4FDDD; border:2px solid #7CC667">TRUE</button>';
+                echo '<button type="button" class="btn btn-block" id="btn2" name="btnF" style="background:#E4FDDD; border:2px solid #7CC667">FALSE</button>';
             }
             echo "</div>";
         }
 
         echo "</div>";
+
         echo "</div>";
     }
 
-    public function selectStudent($rKey) {
+//    public function selectStudent($rKey) {
+//
+//        $sql = 'select * from studentdim where rKey = ' . $rKey;
+//
+//        $rs = $this->ExamModel->getData($sql);
+//
+//        echo '<table width="100%" class="table table-striped table-bordered table-hover" id="dataTables">
+//            <thead>
+//                <tr>
+//                <th>รหัสนักศึกษา</th>
+//                <th>ชื่อนักศึกษา</th>
+//                <th>ทำไปแล้ว</th>
+//                <th>ทำถูก</th>
+//                <th>สถานะ</th>
+//                </tr>
+//               </thead>
+//               <tbody>';
+//
+//        foreach ($rs as $row) {
+//            echo '<tr>';
+//            echo '<td>' . $row['sID'] . '</td>';
+//            echo '<td>' . $row['sName'] . '</td>';
+//            echo '<td>6</td>';
+//            echo '<td class="center">5</td>';
+//            echo '<td class="center">อยู่ระหว่างการทดสอบ</td>';
+//            echo '</tr>';
+//        }
+//        echo '</tbody></table>';
+//    }
 
+    public function testArray($rKey) {
         $sql = 'select * from studentdim where rKey = ' . $rKey;
-
         $rs = $this->ExamModel->getData($sql);
-        echo '<table width="100%" class="table table-striped table-bordered table-hover" id="dataTables">
-            <thead>
-                <tr>
-                <th>รหัสนักศึกษา</th>
-                <th>ชื่อนักศึกษา</th>
-                <th>ทำไปแล้ว</th>
-                <th>ทำถูก</th>
-                <th>สถานะ</th>
-                </tr>
-               </thead>
-               <tbody>';
-
-        foreach ($rs as $row) {
-            echo '<tr>';
-            echo '<td>' . $row['sID'] . '</td>';
-            echo '<td>' . $row['sName'] . '</td>';
-            echo '<td>6</td>';
-            echo '<td class="center">5</td>';
-            echo '<td class="center">อยู่ระหว่างการทดสอบ</td>';
-            echo '</tr>';
+        $sql1 = 'select questionKey from examinationdim where examKey = (select examKey from roomdim where rKey = ' . $rKey . ')';
+        $rs1 = $this->ExamModel->getData($sql1);
+        $quesKey = explode(',', $rs1[0]['questionKey']);
+        $text = '';
+        $text.= '{"data": [';
+        for ($i = 0; $i < count($rs); $i++) {
+            $numOfDo = $this->ExamModel->getData('select * from temp where sKey = ' . $rs[$i]['sKey']);
+            $rKeyinStudent = $this->ExamModel->getData('select inRoom from studentdim where sKey =' . $rs[$i]['sKey']);
+            $text.= '[
+            "' . $rs[$i]['sID'] . '",
+            "' . $rs[$i]['sName'] . '",
+            "' . count($quesKey) . '",';
+            if ($rKeyinStudent[0]['inRoom'] == 0) {
+                $text.= '"' . count($numOfDo) . '",
+                "ทดสอบเสร็จสิ้น"';
+            } else {
+                $text.= '"' . count($numOfDo) . '",
+                "อยู่ระหว่างการทดสอบ"';
+            }
+            $text .=']';
+            if ($i != count($rs) - 1) {
+                $text.=',';
+            }
         }
-        echo '</tbody></table>';
+        $text.= ']}';
+        echo $text;
     }
 
 }

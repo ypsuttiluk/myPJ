@@ -24,9 +24,10 @@ if (isset($this->session->userdata['logged_in'])) {
     exit();
 }
 ?>
+<?php  ?>
 <?php if (isset($this->session->userdata['logged_in']) && $userType == 't') { ?>
     <br>
-    <div class="container">
+    <div class="container" id='reload'>
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-12">
@@ -63,7 +64,7 @@ if (isset($this->session->userdata['logged_in'])) {
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
-                                             <!--<a href="<?php //echo base_url();                                                                                          ?>index.php/MainController/createChapter">-->
+                                             <!--<a href="<?php //echo base_url();                                                                                              ?>index.php/MainController/createChapter">-->
                                             <button type="submit" class="btn btn-primary" name="btnSave" value="btnSave">แก้ไขชื่อห้องเรียน</button><!--</a>-->
                                         </div>
                                         <?php echo form_close(); ?>
@@ -79,10 +80,12 @@ if (isset($this->session->userdata['logged_in'])) {
                                         </div>
                                         <?php echo form_open("index.php/RoomController/createRoom/" . $rs[0]['rKey']); ?>
                                         <div class="modal-body">
-                                            <input class="form-control" type="text" name="nameOfExam" placeholder="ชื่อการทดสอบ" required=""><hr>
+                                            <input class="form-control" type="text" name="nameOfExam" placeholder="ชื่อการทดสอบ" required><hr>
 
-                                            <input class="form-control" type="text" name="time" placeholder="เวลาในการทดสอบ" required="">
+                                            <input class="form-control" type="text" name="time" placeholder="เวลาในการทดสอบ" required>
                                             <br>
+                                            
+                                           
                                             <div class="row">
                                                 <div class="col-xs-12">
                                                     <select name="examInRoom" class="selectpicker form-control" data-width="100%" title="เลือกแบบทดสอบ..." data-size="5" required>
@@ -95,7 +98,7 @@ if (isset($this->session->userdata['logged_in'])) {
 
                                         </div>
                                         <div class="modal-footer">
-                                            <!--<a href="<?php //echo base_url();                                                                                          ?>index.php/MainController/createChapter">-->
+                                            <!--<a href="<?php //echo base_url();                                                                                              ?>index.php/MainController/createChapter">-->
                                             <button  type="submit" class="btn btn-primary" name="btnCreRoom" value="btnCreRoom">ตกลง</button><!--</a>-->
                                         </div>
                                         <?php echo form_close(); ?>
@@ -108,31 +111,40 @@ if (isset($this->session->userdata['logged_in'])) {
 
                         <div class="panel-body">
 
-                            <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables">
+                            <table width="100%" class="table table-striped table-bordered table-hover" id="example">
 
                                 <thead>
                                     <tr>
                                         <th>รหัสนักศึกษา</th>
                                         <th>ชื่อนักศึกษา</th>
+                                        <th>จำนวนข้อ</th>
                                         <th>ทำไปแล้ว</th>
-                                        <th>ทำถูก</th>
                                         <th>สถานะ</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+<!--                                <tbody>
                                     <?php
-                                    foreach ($rs3 as $row) {
-                                        echo '<tr>';
-                                        echo '<td>' . $row['sID'] . '</td>';
-                                        echo '<td>' . $row['sName'] . '</td>';
-                                        echo '<td>6</td>';
-                                        echo '<td class="center">5</td>';
-                                        echo '<td class="center">อยู่ระหว่างการทดสอบ</td>';
-                                        echo '</tr>';
-                                    }
+//                                    foreach ($rs3 as $row) {
+//                                        echo '<tr>';
+//                                        echo '<td>' . $row['sID'] . '</td>';
+//                                        echo '<td>' . $row['sName'] . '</td>';
+//                                        echo '<td>' . count($quesKey) . '</td>';
+//                                        $numOfDo = $this->ExamModel->getData('select * from temp where sKey = ' . $row['sKey']);
+//
+//                                        if (count($numOfDo) != 0) {
+//                                            echo '<td class="center">' . count($numOfDo) . '</td>';
+//                                            echo '<td class="center">อยู่ระหว่างการทดสอบ</td>';
+//                                        } else {
+//                                            echo '<td class="center">0</td>';
+//                                            echo '<td class="center">ทดสอบเสร็จสิ้น</td>';
+//                                        }
+//
+//
+//                                        echo '</tr>';
+//                                    }
                                     ?>
 
-                                </tbody>
+                                </tbody>-->
 
                             </table>
 
@@ -156,6 +168,17 @@ if (isset($this->session->userdata['logged_in'])) {
 <!-- jQuery -->
 <script src="<?php echo base_url(); ?>asset/vendor/jquery/jquery.min.js"></script>
 <script>
+ 
+    
+$(document).ready(function() {
+    var table = $('#example').DataTable( {
+        "ajax": '<?php echo base_url();?>index.php/AjaxController/testArray/<?php echo$rs[0]['rKey'];?>'
+    } );
+    
+    setInterval( function () {
+        table.ajax.reload( null, false ); // user paging is not reset on reload
+    }, 3000 );
+} );
 
 
 
@@ -178,7 +201,7 @@ if (isset($this->session->userdata['logged_in'])) {
 
     var sec = 0
     var min = 10
-    document.getElementById('d2').value = min+"."+sec
+    document.getElementById('d2').value = min + "." + sec
 
     function display() {
         if (sec <= 0) {
@@ -190,7 +213,7 @@ if (isset($this->session->userdata['logged_in'])) {
             min += 1
         } else
             sec -= 1
-         document.getElementById('d2').value = min + "." + sec
+        document.getElementById('d2').value = min + "." + sec
         setTimeout("display()", 1000)
     }
     display()

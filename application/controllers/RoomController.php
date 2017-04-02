@@ -10,13 +10,24 @@ class RoomController extends CI_Controller {
 
     public function createRoom($rKey) {
         if ($this->input->post('btnCreRoom')) {
+            date_default_timezone_set("America/New_York");
+            $str = date("d-m-Y");
+            $date = explode('-', $str);
+
+            $timeKey = $this->ExamModel->getData('select timeKey from timedim where day = "' . $date[0] . '",month = "' . $date[1] . '",year = "' . $date[2] . '"');
+            if (count($timeKey) == 0) {
+                $this->ExamModel->QueryBySQL('insert into timedim(day,month,year) value("' . $date[0] . '","' . $date[1] . '","' . $date[2] . '")');
+                $timeKey = $this->ExamModel->getData('select timeKey from timedim where day = "' . $date[0] . '",month = "' . $date[1] . '",year = "' . $date[2] . '"');
+            }
+
             $arr = array(
                 'nameOfExam' => $this->input->post('nameOfExam'),
                 'examKey' => $this->input->post('examInRoom'),
-                'time' => $this->input->post('time')
+                'time' => $this->input->post('time'),
+                'timeKey' => $timeKey[0]['timeKey']
             );
 
-            $sql = 'update roomdim set rStatus = 1,nameOfExam = "' . $arr['nameOfExam'] . '",examKey = ' . $arr['examKey'] . ',time = "' . $arr['time'] . '" where rKey = ' . $rKey;
+            $sql = 'update roomdim set timeKey=' . $arr['timeKey'] . ',rStatus = 1,nameOfExam = "' . $arr['nameOfExam'] . '",examKey = ' . $arr['examKey'] . ',time = "' . $arr['time'] . '" where rKey = ' . $rKey;
             $this->ExamModel->QueryBySQL($sql);
 
             redirect('index.php/RoomController/roomDetail/' . $rKey . '/t', 'refresh');
@@ -37,14 +48,20 @@ class RoomController extends CI_Controller {
     }
 
     public function addStudentToRoom($rKey, $userKey) {
-        $sql = 'update studentdim set rKey = ' . $rKey . ' where sKey = ' . $userKey;
+        $rs = $this->ExamModel->getData('select rKey from student where inRoom = 1 and sKey = ' . $userKey);
+        if (count($rs) == 0) {
+            $sql = 'update studentdim set inRoom = 1,rKey = ' . $rKey . ' where sKey = ' . $userKey;
+        } else {
+            $this->ExamModel->QueryBySQL('update inRoom = 0 where rKey = ' . $rs[0]['rKey']);
+            $sql = 'update studentdim set inRoom = 1,rKey = ' . $rKey . ' where sKey = ' . $userKey;
+        }
         $this->ExamModel->QueryBySQL($sql);
         redirect('index.php/RoomController/joinToRoom/' . $rKey . '/' . $userKey, 'refresh');
         exit();
     }
 
     public function joinToRoom($rKey, $sKey) {
-        $sql1 = 'select rKey from studentdim where sKey = ' . $sKey;
+        $sql1 = 'select rKey,inRoom from studentdim where sKey = ' . $sKey;
         $data['result'] = $this->ExamModel->getData($sql1);
         $sql2 = 'select * from roomdim where rKey = ' . $rKey;
         $rs = $this->ExamModel->getData($sql2);
@@ -113,6 +130,7 @@ class RoomController extends CI_Controller {
                     $data['rs3'] = $this->ExamModel->getData($sql3);
                     $data['rs2'] = array('0' => array('examText' => 'ยังไม่มีแบบทดสอบ'));
                 } else {
+
                     $data['haveExam'] = '1';
                     $sql2 = "select examText from examinationdim where examKey = " . $examKey;
                     $data['rs2'] = $this->ExamModel->getData($sql2);

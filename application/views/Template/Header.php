@@ -25,7 +25,7 @@
         <link href="<?php echo base_url(); ?>asset/vendor/datatables-responsive/dataTables.responsive.css" rel="stylesheet">
         <!-- Bootstrap select -->
         <link href="<?php echo base_url(); ?>asset/vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
-
+        
         <style>
             body, html{
                 background: #222222;

@@ -111,7 +111,7 @@ if (isset($this->session->userdata['logged_in'])) {
 ?>
 
 <br>
-<button id='autoButton' hidden></button>
+<button id='begin' hidden></button>
 <button id='autoButtonS' data-toggle="modal" data-target="#myModal" hidden data-backdrop="static" data-keyboard="false"></button>
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -129,7 +129,7 @@ if (isset($this->session->userdata['logged_in'])) {
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" onclick="goBack()">กลับ</button>
                 <!--<a href="<?php //echo base_url();                  ?>index.php/MainController/createChapter"></a>-->
-                <button  type="button" class="btn btn-primary" onclick="begin(<?php echo $room[0]['rKey'] . ',' . $userKey; ?>)">เริ่มต้นทำแบบทดสอบ</button>
+                <button type="button" class="btn btn-primary" onclick="begin(<?php echo $room[0]['rKey'] . ',' . $userKey; ?>)">เริ่มต้นทำแบบทดสอบ</button>
             </div>
             <?php //echo form_close();  ?>
         </div>
@@ -146,10 +146,11 @@ if (isset($this->session->userdata['logged_in'])) {
                     <!-- /.panel-heading -->
 
                     <!-- /.row -->
+                    
                 </div>
                
                 <button class="btn-success" id='pre' value="">ก่อนหน้า</button> 
-                <button class="btn-primary" id="next" value="">ถัดไป</button>
+                <button class="btn-primary" id="next" value="">ถัดไป</button>    
             
                 <!-- /.container-fluid -->
             </div>
@@ -164,6 +165,20 @@ if (isset($this->session->userdata['logged_in'])) {
 <script src="<?php echo base_url(); ?>asset/vendor/jquery/jquery.min.js"></script>
 <script>
    
+   function btnFinish(n) {
+        if(n==0){
+            r = confirm('ต้องการส่งแบบทดสอบ ?');
+            if(r==true){
+                $.ajax({
+                    url:'<?php echo base_url();?>index.php/TempController/finishDoExam/<?php echo $userKey;?>/<?php echo $userType;?>/<?php echo $room[0]['rKey'];?>',
+                    success: function(){
+                        alert('ส่งแบบทดสอบแล้ว');
+                        window.location = "<?php echo base_url(); ?>index.php/MainController"
+                    }
+                })
+            }
+        }
+    }
    
     function doTF(n, qKey) {
         
@@ -210,19 +225,27 @@ if (isset($this->session->userdata['logged_in'])) {
     }
 
     jQuery(function () {
-        <?php if (count($temp) == 0 && $result[0]['rKey'] == NULL) { ?>
+        <?php if (count($temp) == 0 && $result[0]['rKey'] == NULL && $result[0]['inRoom'] == 0) { ?>
             //alert('ห้องเรียนอยู่ในสถานะออฟไลน์ กรุณาตั้งค่าห้องเรียน');
-            jQuery('#autoButton').click();
             jQuery('#autoButtonS').click();
+             //jQuery('#autoButton').click();
+        <?php } else if (count($temp) == 0 && $result[0]['rKey'] != NULL && $result[0]['rKey'] == $room[0]['rKey'] && $result[0]['inRoom'] == 1) { ?>
+            jQuery('#begin').click();
         <?php } else if ($result[0]['rKey'] != $room[0]['rKey']) { ?>
             alert('คุณอยู่ในห้องเรียนอื่นอยู่');
             window.location = '<?php echo base_url(); ?>index.php/RoomController/roomDetail/<?php echo $userKey; ?>/s';
-        <?php } else if (count($temp) != 0 && $result[0]['rKey'] != NULL) { ?>
-           jQuery('#autoButton').click();
+        <?php } else if (count($temp) != 0 && $result[0]['rKey'] != NULL && $result[0]['rKey'] == $room[0]['rKey'] && $result[0]['inRoom'] == 1) { ?>
+           jQuery('#begin').click();
+        <?php } else if (count($temp) != 0 && $result[0]['rKey'] != NULL && $result[0]['rKey'] == $room[0]['rKey'] && $result[0]['inRoom'] == 0) {?>
+            alert('คุณทำการทดสอบเสร็จสิ้นแล้ว กรุณารอฟังคำแนะนำจากอาจารย์ผู้สอน');
+            window.location = '<?php echo base_url(); ?>index.php/RoomController/roomDetail/<?php echo $userKey; ?>/s';
+        <?php }else if (count($temp) == 0 && $result[0]['rKey'] != NULL && $result[0]['rKey'] == $room[0]['rKey'] && $result[0]['inRoom'] == 0) {?>
+            alert('คุณทำการทดสอบเสร็จสิ้นแล้ว กรุณารอฟังคำแนะนำจากอาจารย์ผู้สอน');
+            window.location = '<?php echo base_url(); ?>index.php/RoomController/roomDetail/<?php echo $userKey; ?>/s';
         <?php }?>
     });
 
-    $('#autoButton').click(function() {
+    $('#begin').click(function() {
         $.ajax({
             url: '<?php echo base_url(); ?>index.php/AjaxController/testSelect/<?php echo $rs[0]; ?>/<?php echo $result[0]['rKey']; ?>/<?php echo $userKey;?>',
                         success: function (Result) {
