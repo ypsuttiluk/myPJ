@@ -13,6 +13,7 @@
 
         <title>Website for Examination</title>
 
+
         <!-- Bootstrap Core CSS -->
         <link href="<?php echo base_url(); ?>asset/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"> 
         <!-- Custom CSS -->
@@ -25,7 +26,11 @@
         <link href="<?php echo base_url(); ?>asset/vendor/datatables-responsive/dataTables.responsive.css" rel="stylesheet">
         <!-- Bootstrap select -->
         <link href="<?php echo base_url(); ?>asset/vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
-        
+
+
+
+
+
         <style>
             body, html{
                 background: #222222;
@@ -88,23 +93,22 @@
             <!-- Navigation -->
             <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
                 <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
                     </button>
+
                     <a class="navbar-brand" href="<?php echo base_url(); ?>index.php/MainController">WEB-EXAMINATION DEMO</a>
                 </div>
                 <!-- /.navbar-header -->
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="nav navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-top-links navbar-right">
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+                    <ul class="nav navbar-top-links navbar-right mr-auto">
 
                         <?php if (isset($this->session->userdata['logged_in']) && $userType == 't') { ?>
                             <!--<li>
-                                <a href="<?php //echo base_url();           ?>index.php/MainController/roomDetail/<?php //echo $userKey;           ?>">ห้องเรียน</a>
+                                <a href="<?php //echo base_url();                    ?>index.php/MainController/roomDetail/<?php //echo $userKey;                    ?>">ห้องเรียน</a>
                             </li> -->
                             <li>
                                 <a href="<?php echo base_url(); ?>index.php/RoomController/roomDetail/<?php echo $userKey; ?>/<?php echo $userType; ?>">ห้องเรียน</a>
@@ -114,6 +118,9 @@
                             </li>
                             <li>
                                 <a href="<?php echo base_url(); ?>index.php/ExamController/manageExam/<?php echo $userKey; ?>">แบบทดสอบ</a>
+                            </li>
+                            <li>
+                                <a href="<?php echo base_url(); ?>index.php/MainController/resultDetail">ผลลัพธ์การทดสอบ</a>
                             </li>
                             <li>
                                 <a href="<?php echo base_url(); ?>index.php/MainController"><b id='welcome'><i><?php echo $userName; ?></i></b></a>
@@ -145,6 +152,7 @@
 
                     </ul>
                 </div>
+
             </nav>
 
             <!-- /.navbar-collapse -->

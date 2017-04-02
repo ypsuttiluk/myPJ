@@ -20,7 +20,7 @@ class TempController extends CI_Controller {
                 }
             }
             $rs1 = $this->ExamModel->getData('select * from roomdim where tKey = ' . $rKey);
-            $sql = 'insert into resultfact(timeKey,sKey,examKey,sumOfScore) value(' . $rs1[0]["timeKey"] . ',' . $userKey . ',' . $rs1[0]["examKey"] . ',' . $sumOfScore . ')';
+            $sql = 'insert into resultfact(timeKey,sKey,examKey,tKey,nameOfExam,sumOfScore) value(' . $rs1[0]["timeKey"] . ',' . $userKey . ',' . $rs1[0]["examKey"] . ',' . $rKey . ',' . $rs1[0]["nameOfExam"] . ',' . $sumOfScore . ')';
             $this->ExamModel->QueryBySQL($sql);
             $this->ExamModel->QueryBySQL('update temp set moveToResult = 1 where sKey = ' . $userKey);
             $this->ExamModel->QueryBySQL('update studentdim set inRoom = 0 where sKey = ' . $userKey);
@@ -40,7 +40,7 @@ class TempController extends CI_Controller {
                 $rs1 = $this->ExamModel->getData('select * from roomdim where tKey = ' . $rKey);
                 $sql = '';
                 if ($numOfStudent[$i]['moveToResult'] == 0) {
-                    $sql = 'insert into resultfact(timeKey,sKey,examKey,sumOfScore) value(' . $rs1[0]["timeKey"] . ',' . $userKey . ',' . $rs1[0]["examKey"] . ',' . $sumOfScore . ')';
+                    $sql = 'insert into resultfact(timeKey,sKey,examKey,tKey,nameOfExam,sumOfScore) value(' . $rs1[0]["timeKey"] . ',' . $userKey . ',' . $rs1[0]["examKey"] . ',' . $rKey . ',' . $rs1[0]["nameOfExam"] . ',' . $sumOfScore . ')';
                     $this->ExamModel->QueryBySQL($sql);
                 }
             }

@@ -8,6 +8,11 @@ class MainController extends CI_Controller {
         parent::__construct();
     }
 
+    public function resultDetail() {
+        $data['page'] = 'showDetail';
+        $this->load->view('Template/template', $data);
+    }
+
     public function login() {
         if (isset($this->session->userdata['logged_in'])) {
             redirect('index.php/MainController', 'refresh');
@@ -66,7 +71,6 @@ class MainController extends CI_Controller {
                     'userPhone' => $result[0]['sPhone'],
                     'userYear' => $result[0]['sYear'],
                     'userDegree' => $result[0]['sDegree']
-                    
                 );
             }
             $this->session->set_userdata('logged_in', $session_data);

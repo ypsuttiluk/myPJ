@@ -158,6 +158,63 @@ class AjaxController extends CI_Controller {
         echo $text;
     }
 
+    public function getResult($tKey) {
+        $sql = 'select * from resultfact where tKey = ' . $tKey . ' group by nameOfExam';
+        $rs = $this->ExamModel->getData($sql);
+
+//        $sql1 = 'select questionKey from examinationdim where examKey = (select examKey from roomdim where rKey = ' . $rKey . ')';
+//        $rs1 = $this->ExamModel->getData($sql1);
+//        $quesKey = explode(',', $rs1[0]['questionKey']);
+        $text = '';
+        $text.= '{"data": [';
+        for ($i = 0; $i < count($rs); $i++) {
+            $date = $this->ExamModel->getData('select * from timedim where timeKey = ' . $rs[$i]['timeKey']);
+//            $numOfDo = $this->ExamModel->getData('select * from temp where sKey = ' . $rs[$i]['sKey']);
+//            $rKeyinStudent = $this->ExamModel->getData('select inRoom from studentdim where sKey =' . $rs[$i]['sKey']);
+            $text.= '[
+              "' . $date[0]['day'] . '-' . $date[0]['month'] . '-' . $date[0]['year'] . '",
+              "' . $rs[$i]['nameOfExam'] . '"';
+
+//            "' . $rs[$i]['sKey'] . '",
+//            "' . $rs[$i]['examKey'] . '",
+//            "' . $rs[$i]['tKey'] . '",
+//            "' . $rs[$i]['sumOfScore'].'"';
+            $text .=']';
+            if ($i != count($rs) - 1) {
+                $text.=',';
+            }
+        }
+        $text.= ']}';
+        echo $text;
+    }
+
+    public function getResultDetail($tKey, $nameOfExam, $date) {
+        $sql = 'select * from resultfact where tKey = ' . $tKey . ' and nameOfExam = ' . $nameOfExam;
+        $rs = $this->ExamModel->getData($sql);
+//        $sql1 = 'select questionKey from examinationdim where examKey = (select examKey from roomdim where rKey = ' . $rKey . ')';
+//        $rs1 = $this->ExamModel->getData($sql1);
+//        $quesKey = explode(',', $rs1[0]['questionKey']);
+        $text = '';
+        $text.= '{"data": [';
+        for ($i = 0; $i < count($rs); $i++) {
+            $sData = $this->ExamModel->getData('select sID,sName from studentdim where sKey = ' . $rs[$i]['sKey']);
+//            $numOfDo = $this->ExamModel->getData('select * from temp where sKey = ' . $rs[$i]['sKey']);
+//            $rKeyinStudent = $this->ExamModel->getData('select inRoom from studentdim where sKey =' . $rs[$i]['sKey']);
+            $text.= '[
+              "' . $sData[0]['sID'] . '",
+              "' . $sData[0]['sName'] . '",
+              "' . $nameOfExam . '",
+              "' . $rs[$i]['sumOfScore'] . '",
+              "' . $date . '"';
+            $text .=']';
+            if ($i != count($rs) - 1) {
+                $text.=',';
+            }
+        }
+        $text.= ']}';
+        echo $text;
+    }
+
 }
 
 ?>
