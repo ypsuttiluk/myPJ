@@ -80,7 +80,7 @@ if (isset($this->session->userdata['logged_in'])) {
         if(status == 0){
           alert('ขออภัย ห้องเรียนอยู่ในสถานะไม่พร้อมใช้งาน');
         }else{
-             window.location = "<?php echo base_url(); ?>index.php/RoomController/joinToRoom/"+rKey+"/"+userKey+""
+             window.location = "<?php echo base_url(); ?>index.php/RoomController/joinToRoom/"+rKey+"/"+userKey;
         }
     }
     

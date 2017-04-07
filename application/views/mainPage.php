@@ -38,6 +38,8 @@ if (isset($this->session->userdata['logged_in'])) {
                     <div class="panel-body"> 
                         <?php
                         if ($userType == 't') {
+                            echo "<h3>อาจารย์</h3>";
+                            echo "<hr>";
                             echo "Your UserKey is " . $userKey;
                             echo "<br/>";
                             echo "Your ID is " . $userID;
@@ -50,6 +52,8 @@ if (isset($this->session->userdata['logged_in'])) {
                             echo "<br/>";
                         }
                         if ($userType == 's') {
+                            echo "<h3>นักศึกษา</h3>";
+                            echo "<hr>";
                             echo "Your UserKey is " . $userKey;
                             echo "<br/>";
                             echo "Your ID is " . $userID;

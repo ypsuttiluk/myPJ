@@ -9,6 +9,7 @@ class MainController extends CI_Controller {
     }
 
     public function resultDetail() {
+        
         $data['page'] = 'showDetail';
         $this->load->view('Template/template', $data);
     }

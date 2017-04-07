@@ -24,7 +24,7 @@ if (isset($this->session->userdata['logged_in'])) {
     exit();
 }
 ?>
-<?php  ?>
+<?php ?>
 <?php if (isset($this->session->userdata['logged_in']) && $userType == 't') { ?>
     <br>
     <div class="container" id='reload'>
@@ -46,11 +46,26 @@ if (isset($this->session->userdata['logged_in'])) {
                                     <?php } ?>
 
                                 </span>
-                                <span>
-                                    <button class="bg-success" data-toggle="modal" data-target="#myModal2" style="border: 0;cursor: pointer"><i class="fa fa-gear fa-fw"></i></button>
+                               
+    <!--                                    <button class="bg-success" data-toggle="modal" data-target="#myModal2" style="border: 0;cursor: pointer"><i class="fa fa-gear fa-fw"></i></button>-->
                                     <button id='autoButton' data-toggle="modal" data-target="#myModal" hidden data-backdrop="static" data-keyboard="false"></button>
-                                </span>
+                                    <button id='beginTime' hidden></button>
                             </div>
+                            <span class="dropdown">
+
+                                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                        <i class="fa fa-gears fa-fw"></i> <i class="fa fa-caret-down"></i>
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-user pull-left">
+                                        <li><a href="<?php echo base_url(); ?>index.php/TempController/finishDoExam/<?php echo $userKey; ?>/<?php echo $userType; ?>/<?php echo $rs[0]['rKey']; ?>"><i class="glyphicon glyphicon-new-window fa-fw"> หมดเวลา</i></a>
+                                        </li>
+                                        <li class="divider"></li>
+                                        <li><a data-toggle="modal" data-target="#myModal2" style="border: 0;cursor: pointer"><i class="fa fa-gear fa-fw"></i> แก้ไขชื่อห้องเรียน</a>
+                                        </li>
+
+                                    </ul>
+                                    <!-- /.dropdown-user -->
+                                </span>
                             <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
@@ -64,7 +79,7 @@ if (isset($this->session->userdata['logged_in'])) {
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
-                                             <!--<a href="<?php //echo base_url();                                                                                              ?>index.php/MainController/createChapter">-->
+                                             <!--<a href="<?php //echo base_url();                                                                                                ?>index.php/MainController/createChapter">-->
                                             <button type="submit" class="btn btn-primary" name="btnSave" value="btnSave">แก้ไขชื่อห้องเรียน</button><!--</a>-->
                                         </div>
                                         <?php echo form_close(); ?>
@@ -82,10 +97,10 @@ if (isset($this->session->userdata['logged_in'])) {
                                         <div class="modal-body">
                                             <input class="form-control" type="text" name="nameOfExam" placeholder="ชื่อการทดสอบ" required><hr>
 
-                                            <input class="form-control" type="text" name="time" placeholder="เวลาในการทดสอบ" required>
+                                            <input type="number" class="form-control" maxlength="2" min="5" max="60" oninput="maxLengthCheck(this)" name="time" placeholder="เวลาในการทดสอบ(นาที)" required>
                                             <br>
-                                            
-                                           
+
+
                                             <div class="row">
                                                 <div class="col-xs-12">
                                                     <select name="examInRoom" class="selectpicker form-control" data-width="100%" title="เลือกแบบทดสอบ..." data-size="5" required>
@@ -98,14 +113,14 @@ if (isset($this->session->userdata['logged_in'])) {
 
                                         </div>
                                         <div class="modal-footer">
-                                            <!--<a href="<?php //echo base_url();                                                                                              ?>index.php/MainController/createChapter">-->
-                                            <button  type="submit" class="btn btn-primary" name="btnCreRoom" value="btnCreRoom">ตกลง</button><!--</a>-->
+                                            <!--<a href="<?php //echo base_url();                                                                                                ?>index.php/MainController/createChapter">-->
+                                            <button  id = 'beginReady' type="submit" class="btn btn-primary" name="btnCreRoom" value="btnCreRoom">ตกลง</button><!--</a>-->
                                         </div>
                                         <?php echo form_close(); ?>
                                     </div>
                                 </div>
                             </div>
-                            <i class="fa fa-file-text fa-fw"></i> ชื่อห้องเรียน : <?php echo $rs[0]['rName']; ?>
+                            &nbsp;&nbsp;<i class="fa fa-file-text fa-fw"></i> ชื่อห้องเรียน : <?php echo $rs[0]['rName']; ?>
 
                         </div>
 
@@ -122,8 +137,8 @@ if (isset($this->session->userdata['logged_in'])) {
                                         <th>สถานะ</th>
                                     </tr>
                                 </thead>
-<!--                                <tbody>
-                                    <?php
+    <!--                                <tbody>
+                                <?php
 //                                    foreach ($rs3 as $row) {
 //                                        echo '<tr>';
 //                                        echo '<td>' . $row['sID'] . '</td>';
@@ -142,7 +157,7 @@ if (isset($this->session->userdata['logged_in'])) {
 //
 //                                        echo '</tr>';
 //                                    }
-                                    ?>
+                                ?>
 
                                 </tbody>-->
 
@@ -168,62 +183,95 @@ if (isset($this->session->userdata['logged_in'])) {
 <!-- jQuery -->
 <script src="<?php echo base_url(); ?>asset/vendor/jquery/jquery.min.js"></script>
 <script>
- 
-    
-$(document).ready(function() {
-    var table = $('#example').DataTable( {
-        "ajax": '<?php echo base_url();?>index.php/AjaxController/testArray/<?php echo$rs[0]['rKey'];?>'
-    } );
-    
-    setInterval( function () {
-        table.ajax.reload( null, false ); // user paging is not reset on reload
-    }, 3000 );
-} );
+
+
+    $(document).ready(function () {
+
+       <?php if(count($rs3) != 0){?>
+        var table = $('#example').DataTable({
+             
+            "ajax": '<?php echo base_url(); ?>index.php/AjaxController/testArray/<?php echo$rs[0]['rKey']; ?>'
+                 
+                  });
+      
+                    setInterval(function () {
+                        table.ajax.reload(null, false); // user paging is not reset on reload
+                    }, 3000);
+                 <?php }?>
+
+                } );
+               
+              
 
 
 
-    $('#changeStatus').click(function () {
-        if ($('#changeStatus').text() == 'OFFLINE') {
-            $('#changeStatus').html('ONLINE');
-        } else {
-            $('#changeStatus').html('OFFLINE');
-        }
-    });
+                $('#changeStatus').click(function () {
+                    if ($('#changeStatus').text() == 'OFFLINE') {
+                        $('#changeStatus').html('ONLINE');
+                    } else {
+                        $('#changeStatus').html('OFFLINE');
+                    }
+                });
 
-    jQuery(function () {
-<?php if ($rs[0]['rStatus'] == 0) { ?>
-            alert('ห้องเรียนอยู่ในสถานะออฟไลน์ กรุณาตั้งค่าห้องเรียน');
-            jQuery('#autoButton').click();
+                jQuery(function () {
+<?php if (              $rs[0]['rStatus'] == 0) { ?>
+                        alert('ห้องเรียนอยู่ในสถานะออฟไลน์ กรุณาตั้งค่าห้องเรียน');
+                        jQuery('#autoButton').click();
 <?php } ?>
-    });
+                });
 </script>
 <script>
-
-    var sec = 0
-    var min = 10
-    document.getElementById('d2').value = min + "." + sec
-
-    function display() {
-        if (sec <= 0) {
-            sec = 60
-            min -= 1
-        }
-        if (min <= -1) {
-            sec = 0
-            min += 1
-        } else
-            sec -= 1
-        document.getElementById('d2').value = min + "." + sec
-        setTimeout("display()", 1000)
-    }
-    display()
+//    var sec;
+//    var min;
+//    $(document).ready(function(){
+//       
+//            $('#beginTime').click();
+//      
+//    });
+//    
+//    $('#beginTime').click(function(){
+//            sec = 0;
+//        <?php //if ($rs[0]['time'] != NULL) { ?>
+//            min = <?php //echo $rs[0]['time']; ?>;
+//        <?php //} else{ ?>
+//            min = 0;
+//        <?php //} ?>
+//        
+//    });
+//        document.getElementById('d2').value = min + "." + sec;
+//        
+//    function display() {
+//       
+//        if (sec <= 0) {
+//            sec = 60;
+//            min -= 1;
+//        }
+//        if (min <= -1) {
+//            sec = 0;
+//            min += 1;
+//        } else
+//            sec -= 1;
+//        document.getElementById('d2').value = min + "." + sec;
+//        setTimeout("display()", 1000);
+//    }
+//   
+//      display();
+//    
 </script>
 <Script Language="JavaScript">
 ///ตัวเลข 10000 มีค่าเท่ากับ 10 วินาทีครับ
-    function next()
-    {
-        window.location = "<?php echo base_url(); ?>index.php/MainController"
-    }
+//    function next()
+//    {
+//        window.location = "<?php //echo base_url(); ?>index.php/MainController"
+//    }
     //self.setTimeout('next()', 5000) << แก้เองนะตรงนี้ให้ตรงกับเวลาข้างบน
 
 </Script>
+<script>
+    setTimeout(function() {
+        //location.reload();
+    }, 30000);
+</script>
+
+
+    

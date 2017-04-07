@@ -20,14 +20,14 @@ class TempController extends CI_Controller {
                 }
             }
             $rs1 = $this->ExamModel->getData('select * from roomdim where tKey = ' . $rKey);
-            $sql = 'insert into resultfact(timeKey,sKey,examKey,tKey,nameOfExam,sumOfScore) value(' . $rs1[0]["timeKey"] . ',' . $userKey . ',' . $rs1[0]["examKey"] . ',' . $rKey . ',' . $rs1[0]["nameOfExam"] . ',' . $sumOfScore . ')';
+            $sql = 'insert into resultfact(timeKey,sKey,examKey,tKey,nameOfExam,sumOfScore) value(' . $rs1[0]["timeKey"] . ',' . $userKey . ',' . $rs1[0]["examKey"] . ',' . $rKey . ',"' . $rs1[0]["nameOfExam"] . '",' . $sumOfScore . ')';
             $this->ExamModel->QueryBySQL($sql);
             $this->ExamModel->QueryBySQL('update temp set moveToResult = 1 where sKey = ' . $userKey);
             $this->ExamModel->QueryBySQL('update studentdim set inRoom = 0 where sKey = ' . $userKey);
         }if ($userType == 't') {
 
             $numOfStudent = $this->ExamModel->getData('select sKey,moveToResult from temp where tKey = ' . $rKey . ' group by sKey');
-
+            $rs1 = $this->ExamModel->getData('select * from roomdim where tKey = ' . $rKey);
             for ($i = 0; $i < count($numOfStudent); $i++) {
                 $rs = $this->ExamModel->getData('select * from temp where sKey = ' . $numOfStudent[$i]['sKey']);
 
@@ -37,17 +37,29 @@ class TempController extends CI_Controller {
                         $sumOfScore+=1;
                     }
                 }
-                $rs1 = $this->ExamModel->getData('select * from roomdim where tKey = ' . $rKey);
+
                 $sql = '';
                 if ($numOfStudent[$i]['moveToResult'] == 0) {
-                    $sql = 'insert into resultfact(timeKey,sKey,examKey,tKey,nameOfExam,sumOfScore) value(' . $rs1[0]["timeKey"] . ',' . $userKey . ',' . $rs1[0]["examKey"] . ',' . $rKey . ',' . $rs1[0]["nameOfExam"] . ',' . $sumOfScore . ')';
+                    $sql = 'insert into resultfact(timeKey,sKey,examKey,tKey,nameOfExam,sumOfScore) value(' . $rs1[0]["timeKey"] . ',' . $numOfStudent[$i]['sKey'] . ',' . $rs1[0]["examKey"] . ',' . $rKey . ',"' . $rs1[0]["nameOfExam"] . '",' . $sumOfScore . ')';
+
                     $this->ExamModel->QueryBySQL($sql);
                 }
+                $this->ExamModel->QueryBySQL('update studentdim set inRoom = 0,rKey = NULL where rKey = ' . $rKey . ' and sKey = ' . $numOfStudent[$i]['sKey']);
+            }
+            $studentNotDoExamInRoom = $this->ExamModel->getData('select * from studentdim where inRoom = 1 and rKey = ' . $rKey);
+            foreach ($studentNotDoExamInRoom as $r1) {
+                
+                $sql = 'insert into resultfact(timeKey,sKey,examKey,tKey,nameOfExam,sumOfScore) value(' . $rs1[0]["timeKey"] . ',' . $r1['sKey'] . ',' . $rs1[0]["examKey"] . ',' . $rKey . ',"' . $rs1[0]["nameOfExam"] . '",0)';
+                $this->ExamModel->QueryBySQL($sql);
+                $this->ExamModel->QueryBySQL('update studentdim set inRoom = 0,rKey = NULL where rKey = ' . $rKey . ' and sKey = ' . $r1['sKey']);
             }
 
             $this->ExamModel->QueryBySQL('delete from temp where tKey = ' . $rKey);
             $this->ExamModel->QueryBySQL('update roomdim set rStatus = 0,examKey = NULL,nameOfExam = "", time = 0,timeKey = NULL where rKey = ' . $rKey);
-            $this->ExamModel->QueryBySQL('update studentdim set inRoom = 0,rKey = NULL where rKey = ' . $rKey);
+
+
+            redirect('index.php/MainController/resultDetail', 'refresh');
+            exit();
         }
     }
 

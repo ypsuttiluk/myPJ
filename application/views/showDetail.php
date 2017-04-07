@@ -87,6 +87,18 @@ if (isset($this->session->userdata['logged_in'])) {
 <script src="<?php echo base_url(); ?>asset/vendor/bootstrap/js/bootstrap.min.js"></script>
 
 <script>
+    
+    function textToBin(text) {
+        
+      var length = text.length,output='';
+      
+      for (var i = 0;i < length; i++) {
+        var bin = text[i].charCodeAt().toString(2);
+        output += bin;
+      } 
+      
+      return output;
+    }
     $(document).ready(function () {
         var table = $('#resultDetail').DataTable({
             ajax: '<?php echo base_url(); ?>index.php/AjaxController/getResult/<?php echo $userKey; ?>'
@@ -95,7 +107,7 @@ if (isset($this->session->userdata['logged_in'])) {
             var container = $('#example-container').clone();
             container.find('table').attr('id', 'example');
             var data = table.row(this).data();
-            
+           
             var box = bootbox.dialog({
                 show: false,
                 message: container.html(),
@@ -116,14 +128,26 @@ if (isset($this->session->userdata['logged_in'])) {
             });
 
             box.on("shown.bs.modal", function () {
+             
+             var output = data[1].split("");
+                //var output = textToBin(data[1]);
+              
+                
                 $('#example').DataTable({
-                    ajax: '<?php echo base_url(); ?>index.php/AjaxController/getResultDetail/1/'+data[1]+'/'+data[0],
+                  
+                    ajax: {
+                        data: { name : output },
+                        url:'<?php echo base_url(); ?>index.php/AjaxController/getResultDetail/<?php echo $userKey; ?>/'+data[0],
+                     
+                    }
                 });
             });
 
             box.modal('show');
         });
     });
+    
+    
 
 //    $(document).ready(function () {
 //        var table = $('#resultDetail').DataTable({

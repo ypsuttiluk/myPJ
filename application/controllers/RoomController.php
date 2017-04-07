@@ -10,14 +10,14 @@ class RoomController extends CI_Controller {
 
     public function createRoom($rKey) {
         if ($this->input->post('btnCreRoom')) {
-            date_default_timezone_set("America/New_York");
+            date_default_timezone_set("Asia/Bangkok");
             $str = date("d-m-Y");
             $date = explode('-', $str);
 
-            $timeKey = $this->ExamModel->getData('select timeKey from timedim where day = "' . $date[0] . '",month = "' . $date[1] . '",year = "' . $date[2] . '"');
+            $timeKey = $this->ExamModel->getData('select timeKey from timedim where day = "' . $date[0] . '" and month = "' . $date[1] . '" and year = "' . $date[2] . '"');
             if (count($timeKey) == 0) {
                 $this->ExamModel->QueryBySQL('insert into timedim(day,month,year) value("' . $date[0] . '","' . $date[1] . '","' . $date[2] . '")');
-                $timeKey = $this->ExamModel->getData('select timeKey from timedim where day = "' . $date[0] . '",month = "' . $date[1] . '",year = "' . $date[2] . '"');
+                $timeKey = $this->ExamModel->getData('select timeKey from timedim where day = "' . $date[0] . '" and month = "' . $date[1] . '" and year = "' . $date[2] . '"');
             }
 
             $arr = array(
@@ -48,7 +48,7 @@ class RoomController extends CI_Controller {
     }
 
     public function addStudentToRoom($rKey, $userKey) {
-        $rs = $this->ExamModel->getData('select rKey from student where inRoom = 1 and sKey = ' . $userKey);
+        $rs = $this->ExamModel->getData('select rKey from studentdim where inRoom = 1 and sKey = ' . $userKey);
         if (count($rs) == 0) {
             $sql = 'update studentdim set inRoom = 1,rKey = ' . $rKey . ' where sKey = ' . $userKey;
         } else {
@@ -62,12 +62,14 @@ class RoomController extends CI_Controller {
 
     public function joinToRoom($rKey, $sKey) {
         $sql1 = 'select rKey,inRoom from studentdim where sKey = ' . $sKey;
+        
         $data['result'] = $this->ExamModel->getData($sql1);
         $sql2 = 'select * from roomdim where rKey = ' . $rKey;
         $rs = $this->ExamModel->getData($sql2);
         $data['room'] = $rs;
         $sql3 = 'select questionKey from examinationdim where examKey = (select examKey from roomDim where rKey = ' . $rKey . ')';
         $questionKey = $this->ExamModel->getData($sql3);
+       
         $sql4 = 'select tempKey from temp where sKey = ' . $sKey;
         $data['temp'] = $this->ExamModel->getData($sql4);
         //test again by noy use github in desktop

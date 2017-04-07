@@ -22,6 +22,8 @@ class ExamModel extends CI_Model {
       return $rs;
       } */
 
+    
+
     public function getNumrow($sql) {
         $rs = $this->db->query($sql);
 

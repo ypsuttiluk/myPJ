@@ -140,12 +140,85 @@
     }
 
 
+    function Counter(options) {
+        var timer;
+        var instance = this;
+        var seconds = options.seconds;
+        var min = options.min;
+        var onUpdateStatus = options.onUpdateStatus || function() {};
+        var onCounterEnd = options.onCounterEnd || function() {};
+        var onCounterStart = options.onCounterStart || function() {};
 
+        function decrementCounter() {
+                onUpdateStatus(min,seconds);
+                if (seconds === 0 & min === 0) {
+                    stopCounter();
+                    onCounterEnd();
+                    return;
+                }
+                if (seconds <= 0) {
+                    seconds = 60;
+                    min -= 1;
+                }
+                if (min <= -1) {
+                    seconds = 0;
+                    min += 1;
+                } else {
+                    seconds--;
+                }
+                
+        };
+
+        function startCounter() {
+            onCounterStart();
+            clearInterval(timer);
+            timer = 0;
+            decrementCounter();
+            timer = setInterval(decrementCounter, 1000);
+        };
+
+        function stopCounter() {
+            clearInterval(timer);
+        };
+
+        return {
+            start: function () {
+                startCounter();
+            },
+            stop: function () {
+                stopCounter();
+            }
+        };
+    };
 
 
 // Page-Level Demo Scripts - Tables - Use for reference
 
 
+</script>
+<script>
+    var countdown = new Counter({
+    // number of seconds to count down
+    min: 5,
+    seconds: 0,
+
+    onCounterStart: function () { 
+        //alert('begin'); 
+    },
+
+    // callback function for each second
+    onUpdateStatus: function(min,second) {
+         document.getElementById('d2').value = min+"."+second;
+        // change the UI that displays the seconds remaining in the timeout 
+    },
+
+    // callback function for final action after countdown
+    onCounterEnd: function() {
+        //alert('end');
+        //window.location = '<?php echo base_url(); ?>index.php/MainController';
+    }
+    });
+countdown.start();
 </script>
 </body>
 </html>

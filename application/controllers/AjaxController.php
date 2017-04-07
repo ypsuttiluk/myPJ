@@ -188,8 +188,33 @@ class AjaxController extends CI_Controller {
         echo $text;
     }
 
-    public function getResultDetail($tKey, $nameOfExam, $date) {
-        $sql = 'select * from resultfact where tKey = ' . $tKey . ' and nameOfExam = ' . $nameOfExam;
+    public function getResultDetail($tKey, $date) {
+
+        //$string = $this->examModel->splitAndParseToText($nameOfExam);
+//        $sss = explode('%', $nameOfExam);
+//        $str ='';
+//        for($i=0;$i<count($sss);$i++){
+//            $str.=$sss[$i];
+//        }
+//      
+        # valid binary string, split, explode and other magic
+        # prepare string for conversion
+//        $chars = explode("\n", chunk_split(str_replace("\n", '', $nameOfExam), 8));
+//        $char_count = count($chars);
+//        $string = chr(bindec($chars[0]));
+        # converting the characters one by one
+//        for ($k = 0; $k < count($chars); $i++) {
+//            $string .= chr(bindec($chars[1]));
+//        }
+        # let's return the result
+
+        $myArray = $_REQUEST['name'];
+        $nameOfExam = '';
+        for ($j = 0; $j < count($myArray); $j++) {
+            $nameOfExam = $nameOfExam . $myArray[$j];
+        }
+
+        $sql = "select * from resultfact where tKey = " . $tKey . " and nameOfExam = '" . $nameOfExam . "'";
         $rs = $this->ExamModel->getData($sql);
 //        $sql1 = 'select questionKey from examinationdim where examKey = (select examKey from roomdim where rKey = ' . $rKey . ')';
 //        $rs1 = $this->ExamModel->getData($sql1);

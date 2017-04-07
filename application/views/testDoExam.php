@@ -223,7 +223,7 @@ if (isset($this->session->userdata['logged_in'])) {
     function begin(rKey, userKey) {
         window.location = "<?php echo base_url(); ?>index.php/RoomController/addStudentToRoom/" + rKey + "/" + userKey + "";
     }
-
+$(document).ready(function(){
     jQuery(function () {
         <?php if (count($temp) == 0 && $result[0]['rKey'] == NULL && $result[0]['inRoom'] == 0) { ?>
             //alert('ห้องเรียนอยู่ในสถานะออฟไลน์ กรุณาตั้งค่าห้องเรียน');
@@ -244,69 +244,70 @@ if (isset($this->session->userdata['logged_in'])) {
             window.location = '<?php echo base_url(); ?>index.php/RoomController/roomDetail/<?php echo $userKey; ?>/s';
         <?php }?>
     });
+    });
 
     $('#begin').click(function() {
         $.ajax({
             url: '<?php echo base_url(); ?>index.php/AjaxController/testSelect/<?php echo $rs[0]; ?>/<?php echo $result[0]['rKey']; ?>/<?php echo $userKey;?>',
-                        success: function (Result) {
-                            $('#result').html(Result);
-                        }
-                    });
-                });
+            success: function (Result) {
+                $('#result').html(Result);
+            }
+        });
+    });
 
-                $('#next').click(function (event) {
-                    a = document.getElementById('test').value
-                    b = document.getElementById('next');
-                    if (document.getElementById('test').value == <?php echo $numOfQues - 1; ?>) {
-                        b.value = <?php echo $numOfQues - 1; ?>;
-                    } else {
-                        b.value = parseInt(a) + 1;
-                    }
-                    var idArr = [<?php
-for ($i = 0; $i < $numOfQues; $i++) {
-    if ($i != $numOfQues - 1) {
-        echo $rs[$i] . ',';
-    } else {
-        echo $rs[$i];
-    }
-}
-?>]
-                    document.getElementById('test').value = b.value;
-                    event.preventDefault();
-                    $.ajax({
-                        url: '<?php echo base_url(); ?>index.php/AjaxController/testSelect/' + idArr[b.value] + '/<?php echo $result[0]['rKey']; ?>/<?php echo $userKey;?>',
-                        success: function (Result) {
-                            $('#result').html(Result);
-                        }
-                    });
-                });
+    $('#next').click(function (event) {
+        a = document.getElementById('test').value
+        b = document.getElementById('next');
+        if (document.getElementById('test').value == <?php echo $numOfQues - 1; ?>) {
+            b.value = <?php echo $numOfQues - 1; ?>;
+        } else {
+            b.value = parseInt(a) + 1;
+        }
+        var idArr = [<?php
+            for ($i = 0; $i < $numOfQues; $i++) {
+                if ($i != $numOfQues - 1) {
+                    echo $rs[$i] . ',';
+                } else {
+                    echo $rs[$i];
+                }
+            }
+        ?>]
+        document.getElementById('test').value = b.value;
+        event.preventDefault();
+        $.ajax({
+            url: '<?php echo base_url(); ?>index.php/AjaxController/testSelect/' + idArr[b.value] + '/<?php echo $result[0]['rKey']; ?>/<?php echo $userKey;?>',
+            success: function (Result) {
+                $('#result').html(Result);
+            }
+        });
+    });
 
-                $('#pre').click(function (event) {
-                    a = document.getElementById('test').value;
-                    b = document.getElementById('next');
-                    if (document.getElementById('test').value == 0) {
-                        b.value = 0;
-                    } else {
-                        b.value = parseInt(a) - 1;
-                    }
-                    var idArr = [<?php
-for ($i = 0; $i < $numOfQues; $i++) {
-    if ($i != $numOfQues - 1) {
-        echo $rs[$i] . ',';
-    } else {
-        echo $rs[$i];
-    }
-}
-?>]
-                    document.getElementById('test').value = b.value;
-                    event.preventDefault();
-                    $.ajax({
-                        url: '<?php echo base_url(); ?>index.php/AjaxController/testSelect/' + idArr[b.value] + '/<?php echo $result[0]['rKey']; ?>/<?php echo $userKey;?>',
-                        success: function (Result) {
-                            $('#result').html(Result);
-                        }
-                    });
-                });
+    $('#pre').click(function (event) {
+        a = document.getElementById('test').value;
+        b = document.getElementById('next');
+        if (document.getElementById('test').value == 0) {
+            b.value = 0;
+        } else {
+            b.value = parseInt(a) - 1;
+        }
+        var idArr = [<?php
+            for ($i = 0; $i < $numOfQues; $i++) {
+                if ($i != $numOfQues - 1) {
+                    echo $rs[$i] . ',';
+                } else {
+                    echo $rs[$i];
+                }
+            }
+        ?>]
+        document.getElementById('test').value = b.value;
+        event.preventDefault();
+        $.ajax({
+            url: '<?php echo base_url(); ?>index.php/AjaxController/testSelect/' + idArr[b.value] + '/<?php echo $result[0]['rKey']; ?>/<?php echo $userKey;?>',
+            success: function (Result) {
+                $('#result').html(Result);
+            }
+        });
+    });
 
  
 
