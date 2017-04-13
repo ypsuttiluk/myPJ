@@ -61,16 +61,16 @@ if (isset($this->session->userdata['logged_in'])) {
                                 <!-- /.modal-dialog -->
                             </div>
                             <!-- /.modal -->
-                            <i class="glyphicon glyphicon-th-list fa-fw"></i> บทเรียน
+                            <i class="glyphicon glyphicon-th-list fa-fw"></i> บทเรียน (จำนวนบทเรียนทั้งหมด : <?php echo count($rs);?> บทเรียน)
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body"> 
                             <div class="list-group">
-                                <?php foreach ($rs as $r) { ?>
+                                <?php $i=1;foreach ($rs as $r) { ?>
                                     <a href="<?php echo base_url(); ?>index.php/ChapterController/chapterDetail/<?php echo $r['chapterKey']; ?>" class="list-group-item">
-                                        <i class="glyphicon glyphicon-book fa-fw"></i> <?php echo $r['chapterName']; ?>
+                                       <?php echo $i;?> : <i class="glyphicon glyphicon-book fa-fw"></i> <?php echo $r['chapterName']; ?>
                                     </a>
-                                <?php } ?>
+                                <?php $i++;} ?>
                             </div>
                         </div>
                         <!-- /.row -->

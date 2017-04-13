@@ -46,7 +46,7 @@ if (isset($this->session->userdata['logged_in'])) {
                                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                                             <h4 class="modal-title" id="myModalLabel">สร้างแบบทดสอบ</h4>
                                         </div>
-                                        <?php echo form_open('index.php/ExamController/createExam/' . $userKey); ?>
+                                        <?php echo form_open('index.php/ExamController/createExam/' . $userKey, array('onsubmit' => 'return confirmCreExam()')); ?>
                                         <div class="modal-body">
                                             <input type="text" class="form-control" name="examText" placeholder="ชื่อแบบทดสอบ" autofocus required="">
                                             <br>
@@ -105,17 +105,17 @@ if (isset($this->session->userdata['logged_in'])) {
                                 <!-- /.modal-dialog -->
                             </div>
                             <!-- /.modal -->
-                            <i class="glyphicon glyphicon-th-list fa-fw"></i> คลังแบบทดสอบ
+                            <i class="glyphicon glyphicon-th-list fa-fw"></i> คลังแบบทดสอบ (จำนวนแบบทดสอบทั้งหมด : <?php echo count($rs);?> แบบทดสอบ)
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body"> 
 
                             <div class="list-group">
-                                <?php foreach ($rs as $r) { ?>
+                                <?php $i=1;foreach ($rs as $r) { ?>
                                     <a href="<?php echo base_url(); ?>index.php/ExamController/examDetail/<?php echo $r['examKey']; ?>" class="list-group-item">
-                                        <i class="fa fa-file-text fa-fw"></i> <?php echo $r['examText']; ?>
+                                        <?php echo $i;?> : <i class="fa fa-file-text fa-fw"></i> <?php echo $r['examText']; ?>
                                     </a>
-                                <?php } ?>
+                                <?php $i++;} ?>
                             </div>
 
 
@@ -132,6 +132,16 @@ if (isset($this->session->userdata['logged_in'])) {
     <?php //echo form_close();    ?>
 <?php } ?>
 </div>
+<script>
+    function confirmCreExam(){
+        y = confirm('ต้องการสร้างแบบทดสอบ');
+        if(y){
+            return true;
+        }else{
+            return false;
+        }
+    }
+</script>
 
 
 

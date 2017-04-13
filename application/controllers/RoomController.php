@@ -29,7 +29,7 @@ class RoomController extends CI_Controller {
 
             $sql = 'update roomdim set timeKey=' . $arr['timeKey'] . ',rStatus = 1,nameOfExam = "' . $arr['nameOfExam'] . '",examKey = ' . $arr['examKey'] . ',time = "' . $arr['time'] . '" where rKey = ' . $rKey;
             $this->ExamModel->QueryBySQL($sql);
-
+            $this->ExamModel->QueryBySQL('update examinationdim set flag = 1 where examKey = '.$this->input->post('examInRoom'));
             redirect('index.php/RoomController/roomDetail/' . $rKey . '/t', 'refresh');
         }
     }

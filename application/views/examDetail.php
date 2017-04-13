@@ -25,7 +25,7 @@ if (isset($this->session->userdata['logged_in'])) {
 }
 ?>
 <?php if (isset($this->session->userdata['logged_in']) && $userType == 't') { ?>
-    <?php //echo form_open("index.php/MainController/editExam/" . $examKey);                                                                         ?>
+    <?php //echo form_open("index.php/MainController/editExam/" . $examKey);                                                                          ?>
     <!-- Page Content -->
     <br>
 
@@ -40,7 +40,11 @@ if (isset($this->session->userdata['logged_in'])) {
                                 <span>
                                     <button class="bg-success" data-toggle="modal" data-target="#myModal2" style="border: 0"><i class="fa fa-pencil-square fa-fw"></i>แก้ไขชื่อแบบทดสอบ</button>
                                 </span>
-
+                                <?php if ($rs[0]['flag'] == 0) { ?>
+                                    <span>
+                                        <a style="color: #DA3D0F" href="<?php echo base_url();?>index.php/ExamController/deleteExam/<?php echo $rs[0]['examKey'];?>/<?php echo $userKey;?>" onclick="return confirmRemove()"><button class="bg-success" style="border: 0"><i class="glyphicon glyphicon-remove fa-fw"></i>ลบแบบทดสอบ</button></a>
+                                    </span>
+                                <?php } ?>
                             </div>
                             <!-- Modal2 -->
                             <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -56,7 +60,7 @@ if (isset($this->session->userdata['logged_in'])) {
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
-                                            <!--<a href="<?php //echo base_url();                                      ?>index.php/MainController/createChapter">-->
+                                            <!--<a href="<?php //echo base_url();                                       ?>index.php/MainController/createChapter">-->
                                             <button type="submit" class="btn btn-primary" name="btnSave" value="btnSave">แก้ไขแบบทดสอบ</button><!--</a>-->
                                         </div>
                                         <?php echo form_close(); ?>
@@ -66,30 +70,32 @@ if (isset($this->session->userdata['logged_in'])) {
                                 <!-- /.modal2-dialog -->
                             </div>
                             <!-- /.modal2 -->
-
-                            <i class="fa fa-file-text fa-fw"></i> ชื่อแบบทดสอบ :  <?php echo $examText; ?>
+                            <?php
+                            foreach ($rs as $r) {
+                                $question = explode(",", $r['questionKey']);
+                            }
+                            ?>
+                            <i class="fa fa-file-text fa-fw"></i> ชื่อแบบทดสอบ :  <?php echo $examText; ?> (จำนวนทั้งหมด : <?php echo count($question); ?> ข้อ)
                         </div>
-                        <?php
-                        foreach ($rs as $r) {
-                            $question = explode(",", $r['questionKey']);
-                        }
-                        ?>
+
 
                         <!-- /.panel-heading -->
                         <div class="panel-body"> 
                             <div class="list-group">
-                                <!-- <a href="<?php //echo base_url();                            ?>index.php/MainController/editQuestion/<?php //echo $chapterKey;                            ?>/<?php // echo $r['quesKey'];                            ?>" class="list-group-item">-->
+                                <!-- <a href="<?php //echo base_url();                             ?>index.php/MainController/editQuestion/<?php //echo $chapterKey;                             ?>/<?php // echo $r['quesKey'];                             ?>" class="list-group-item">-->
                                 <?php
+                                $i = 1;
                                 foreach ($question as $result) {
                                     $questionText = $this->ExamModel->questionInExam($result);
                                     $sql = 'select chapterName from chapterdim where chapterKey =' . $questionText[0]['chapterKey'];
                                     $chapterName = $this->ExamModel->getData($sql);
                                     ?>
                                     <a href="<?php echo base_url(); ?>index.php/QuesController/editQuestion/NULL/<?php echo $questionText[0]['quesKey']; ?>/1" class="list-group-item">
-                                        <i class="glyphicon glyphicon-question-sign fa-fw"></i> <?php echo $questionText[0]['quesText']; ?>
+                                        <i class="glyphicon glyphicon-question-sign fa-fw"></i>ข้อที่ <?php echo $i; ?> : <?php echo $questionText[0]['quesText']; ?>
                                         <span class="pull-right text-muted small"><em><?php echo $chapterName[0]['chapterName']; ?></em></span>
                                     </a>                                   
-                                <?php } ?>
+        <?php $i++;
+    } ?>
                             </div>
                         </div>
                         <!-- /.row -->
@@ -100,6 +106,16 @@ if (isset($this->session->userdata['logged_in'])) {
             </div>
         </div>
     </div>
-    <?php //echo form_close();        ?>
+    <?php //echo form_close();         ?>
 <?php } ?>
 </div>
+<script>
+    function confirmRemove(){
+        x = confirm('ต้องการลบ ?');
+        if(x){
+            return true;
+        }else{
+            return false;
+        }
+    }
+</script>

@@ -20,11 +20,11 @@ class ExamController extends CI_Controller {
             $union = 'UNION';
             for ($i = 0; $i < count($numOfQuestion); $i++) {
                 $text = $text . '(select * from questiondim where chapterKey = ' . $chapter[$i] . ' order by RAND() limit ' . $numOfQuestion[$i] . ')';
-                if($i!=  count($numOfQuestion)-1){
-                    $text = $text.$union;
+                if ($i != count($numOfQuestion) - 1) {
+                    $text = $text . $union;
                 }
             }
-            
+
             $sql = $text;
             $result = $this->ExamModel->getData($sql);
             $quesKey = '';
@@ -77,4 +77,10 @@ class ExamController extends CI_Controller {
         }
     }
 
+    public function deleteExam($examKey,$userKey){
+        $sql = 'delete from examinationdim where examKey = '.$examKey;
+        $this->ExamModel->QueryBySQL($sql);
+        redirect('index.php/ExamController/manageExam/'.$userKey,'refresh');
+        exit();
+    }
 }

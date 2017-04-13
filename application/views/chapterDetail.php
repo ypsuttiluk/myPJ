@@ -93,17 +93,17 @@ if (isset($this->session->userdata['logged_in'])) {
                             </div>
                             <!-- /.modal2 -->
 
-                            <i class="fa fa-file-text fa-fw"></i> ชื่อบทเรียน :  <?php echo $chapterName; ?>
+                            <i class="fa fa-file-text fa-fw"></i> ชื่อบทเรียน :  <?php echo $chapterName; ?> (จำนวนคำถามทั้งหมด : <?php echo count($rs);?> คำถาม)
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body"> 
                             <div class="list-group">
-                                <?php foreach ($rs as $r) { ?>
+                                <?php $i=1;foreach ($rs as $r) { ?>
                                     <a href="<?php echo base_url(); ?>index.php/QuesController/editQuestion/<?php echo $chapterKey; ?>/<?php echo $r['quesKey']; ?>/0" class="list-group-item">
                                         <!--<a href="#" class="list-group-item">  -->     
-                                        <i class="glyphicon glyphicon-question-sign fa-fw"></i> <?php echo $r['quesText']; ?>
+                                        <i class="glyphicon glyphicon-question-sign fa-fw"></i>คำถาม <?php echo $i;?> : <?php echo $r['quesText']; ?>
                                     </a>
-                                <?php } ?>
+                                <?php $i++;} ?>
                             </div>
                         </div>
                         <!-- /.row -->
