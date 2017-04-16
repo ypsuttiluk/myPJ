@@ -21,6 +21,10 @@
         <link href="<?php echo base_url(); ?>asset/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
         <!-- DataTables CSS -->
         <link href="<?php echo base_url(); ?>asset/vendor/datatables-plugins/dataTables.bootstrap.css" rel="stylesheet">
+
+        <!--        <link href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css" rel="stylesheet">-->
+        <!--        <link href="https://cdn.datatables.net/buttons/1.2.4/css/buttons.dataTables.min.css" rel="stylesheet">-->
+
         <!-- DataTables Responsive CSS -->
         <link href="<?php echo base_url(); ?>asset/vendor/datatables-responsive/dataTables.responsive.css" rel="stylesheet">
         <!-- Bootstrap select -->
@@ -81,6 +85,10 @@
                 $userYear = $this->session->userdata['logged_in']['userYear'];
                 $userDegree = $this->session->userdata['logged_in']['userDegree'];
             }
+            if ($this->session->userdata['logged_in']['userType'] == 'a') {
+                $userType = $this->session->userdata['logged_in']['userType'];
+                $userName = $this->session->userdata['logged_in']['userName'];
+            }
         } else {
 
             redirect('index.php/MainController/login', 'refresh');
@@ -107,7 +115,7 @@
 
                         <?php if (isset($this->session->userdata['logged_in']) && $userType == 't') { ?>
                             <!--<li>
-                                <a href="<?php //echo base_url();                    ?>index.php/MainController/roomDetail/<?php //echo $userKey;                    ?>">ห้องเรียน</a>
+                                <a href="<?php //echo base_url();                     ?>index.php/MainController/roomDetail/<?php //echo $userKey;                     ?>">ห้องเรียน</a>
                             </li> -->
                             <li>
                                 <a href="<?php echo base_url(); ?>index.php/RoomController/roomDetail/<?php echo $userKey; ?>/<?php echo $userType; ?>">ห้องเรียน</a>
@@ -133,6 +141,15 @@
                                 <a href="<?php echo base_url(); ?>index.php/MainController"><b id='welcome'><i><?php echo $userName; ?></i></b></a>
                             </li>
                         <?php } ?>
+                        <?php if (isset($this->session->userdata['logged_in']) && $userType == 'a') { ?>
+                            
+                            <li>
+                                <a href="<?php echo base_url(); ?>index.php/MainController"><b id='welcome'><i><?php echo $userName; ?></i></b></a>
+                            </li>
+                             <li>
+                               <a href="<?php echo base_url(); ?>index.php/AjaxController/getUser/t">รายชื่อผู้ใช้ระบบ</a>
+                            </li>
+                        <?php } ?>
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                                 <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
@@ -140,7 +157,7 @@
                             <ul class="dropdown-menu dropdown-user">
                                 <li><a href="<?php echo base_url(); ?>index.php/MainController"><i class="fa fa-user fa-fw"></i> User Profile</a>
                                 </li>
-                                <li><a href="<?php echo base_url(); ?>index.php/MainController"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                                <li><a href="<?php echo base_url(); ?>index.php/MainController/userDetail"><i class="fa fa-gear fa-fw"></i> Settings</a>
                                 </li>
                                 <li class="divider"></li>
                                 <li><a href="<?php echo base_url(); ?>index.php/MainController/logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>

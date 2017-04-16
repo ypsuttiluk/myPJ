@@ -1,7 +1,10 @@
 <!-- end warper-->
 
 <!-- jQuery -->
+<!--<script src="//code.jquery.com/jquery-1.12.4.js"></script>-->
+
 <script src="<?php echo base_url(); ?>asset/vendor/jquery/jquery.min.js"></script>
+
 <!-- Bootstrap Core JavaScript -->
 <script src="<?php echo base_url(); ?>asset/vendor/bootstrap/js/bootstrap.min.js"></script>
 <!-- DataTables JavaScript -->
@@ -10,7 +13,7 @@
 
 <script src="<?php echo base_url(); ?>asset/vendor/datatables-responsive/dataTables.responsive.js"></script>
 <!--Custom Theme JavaScript -->
-<!--<script src="<?php //echo base_url();?>asset/dist/js/sb-admin-2.js"></script>-->
+<!--<script src="<?php //echo base_url();   ?>asset/dist/js/sb-admin-2.js"></script>-->
 <!-- bootstrap js select-->
 <script src="<?php echo base_url(); ?>asset/vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
 
@@ -18,6 +21,64 @@
 <script>
 
 
+    function ajaxFunction(typeUser){
+        var keyUser = $("#colInModal1").val();
+        var newPass = $('#colInModal2').val();
+      
+        $.ajax({
+            url: '<?php echo base_url();?>index.php/MainController/editPass/'+typeUser+'/'+keyUser+'/'+newPass,
+            type: 'POST',
+            success: function(){
+                alert('เปลี่ยนรหัสผ่านแล้ว');
+                $('#modalChangePass').modal('hide');
+                //the response variable will hold anything that is written in that php file(in html) and anything you echo in that file
+                }
+        }); 
+        return false;
+    }
+
+    $(document).ready(function () {
+        $("#form-password").submit(function (event) {
+            event.preventDefault();
+            $.ajax({
+                url: "<?php echo base_url(); ?>index.php/MainController/editPass",
+                type: "POST"
+            });
+        });
+    });
+
+    $('#changePass').on('click', function () {
+        $("#colInModal1").val($('#col0').val());
+    });
+    $('#usersTDetail tbody').on('click', 'tr', function () {
+        $("#tModal").modal("show");
+        $("#col0").val($(this).closest('tr').children()[0].textContent);
+        $("#col1").val($(this).closest('tr').children()[1].textContent);
+        $("#col2").val($(this).closest('tr').children()[2].textContent);
+        $("#col3").val($(this).closest('tr').children()[3].textContent);
+        $("#col4").val($(this).closest('tr').children()[4].textContent);
+        if ($(this).closest('tr').children()[5].textContent == 'มีสิทธ์') {
+            $("#License").val('H');
+        } else {
+            $("#License").val('NH');
+        }
+
+    });
+
+    $('#usersSDetail tbody').on('click', 'tr', function () {
+        $("#sModal").modal("show");
+        $("#col0").val($(this).closest('tr').children()[0].textContent);
+        $("#col1").val($(this).closest('tr').children()[1].textContent);
+        $("#col2").val($(this).closest('tr').children()[2].textContent);
+        $("#col3").val($(this).closest('tr').children()[3].textContent);
+        $("#col4").val($(this).closest('tr').children()[4].textContent);
+        $("#col5").val($(this).closest('tr').children()[5].textContent);
+        if ($(this).closest('tr').children()[6].textContent == 'มีสิทธ์') {
+            $("#License").val('H');
+        } else {
+            $("#License").val('NH');
+        }
+    });
 
     function allowText(index) {
         var checkbox = document.getElementById('fancy-checkbox-primary' + index);
@@ -29,10 +90,7 @@
         }
     }
 
-    /* AJAX request to checker */
-    $('#myCarousel').carousel({
-        interval: false
-    });
+
     $(document).ready(function () {
         $('#dataTables').DataTable({
             responsive: true
@@ -220,5 +278,7 @@
     });
 countdown.start();
 </script>-->
+
+
 </body>
 </html>

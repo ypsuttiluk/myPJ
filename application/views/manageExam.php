@@ -18,6 +18,10 @@ if (isset($this->session->userdata['logged_in'])) {
         $userYear = $this->session->userdata['logged_in']['userYear'];
         $userDegree = $this->session->userdata['logged_in']['userDegree'];
     }
+    if ($this->session->userdata['logged_in']['userType'] == 'a') {
+        $userType = $this->session->userdata['logged_in']['userType'];
+        $userName = $this->session->userdata['logged_in']['userName'];
+    }
 } else {
 
     redirect('index.php/MainController/login', 'refresh');
@@ -60,9 +64,9 @@ if (isset($this->session->userdata['logged_in'])) {
                                                 <div class='row'>
                                                     <div class="form-group col-xs-8">
                                                         <?php if (count($ar) > 0) { ?>
-                                                            <input type="checkbox" value='<?php echo $rs2[$i]['chapterKey']; ?>' name="chapter[]" id="fancy-checkbox-primary<?php echo $i; ?>" autocomplete="off" onchange="allowText(<?php echo $i; ?>)">
+                                                            <input type="checkbox" value='<?php echo $rs2[$i]['chapterKey']; ?>' name="chapter[]" id="fancy-checkbox-primary<?php echo $i; ?>" autocomplete="off" onchange="allowText(<?php echo $i; ?>);sumOfQues(<?php echo count($rs2); ?>);">
                                                         <?php } else { ?>
-                                                            <input type="checkbox" value='<?php echo $rs2[$i]['chapterKey']; ?>' name="chapter[]" id="fancy-checkbox-primary<?php echo $i; ?>" autocomplete="off" onchange="allowText(<?php echo $i; ?>)" disabled>
+                                                            <input type="checkbox" value='<?php echo $rs2[$i]['chapterKey']; ?>' name="chapter[]" id="fancy-checkbox-primary<?php echo $i; ?>" autocomplete="off" onchange="allowText(<?php echo $i; ?>);sumOfQues(<?php echo count($rs2); ?>);" disabled>
                                                         <?php } ?>
                                                         <div class="btn-group">
                                                             <label for="fancy-checkbox-primary<?php echo $i; ?>" class="btn btn-info">
@@ -80,7 +84,7 @@ if (isset($this->session->userdata['logged_in'])) {
                                                             จำนวน
                                                         </div>
                                                         <div class="form-group col-xs-2">
-                                                            <input id='inputText<?php echo $i; ?>' type="number" class="form-control" maxlength="2" min="1" max="<?php echo count($ar); ?>" oninput="maxLengthCheck(this)" disabled value="" name = 'numberOfQues[]'>
+                                                            <input id='inputText<?php echo $i; ?>' type="number" class="form-control" maxlength="2" min="1" max="<?php echo count($ar); ?>" oninput="maxLengthCheck(this);sumOfQues(<?php echo count($rs2); ?>);" disabled value="" name = 'numberOfQues[]' required>
                                                         </div>
                                                         <div class="form-group col-xs-1" style="padding-top:8px">
                                                             ข้อ
@@ -92,10 +96,13 @@ if (isset($this->session->userdata['logged_in'])) {
                                                     <?php } ?>
                                                 </div>
                                             <?php } ?>
+                                            <hr>
+                                            <div class="pull-right"><label>คำถามทั้งหมด&nbsp;<input id='numOfQues' type="text" readonly value='0' style="text-align:center;border: none" size="2">&nbsp;ข้อ</label></div><br>
                                         </div> 
                                         <div class="modal-footer">
+                                        
                                             <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
-                                            <!--<a href="<?php //echo base_url();                                                                                                              ?>index.php/MainController/createChapter">-->
+                                            <!--<a href="<?php //echo base_url();?>index.php/MainController/createChapter">-->
                                             <button type="submit" class="btn btn-primary" name="btnSave" value="btnSave">สร้างแบบทดสอบ</button><!--</a>-->
                                         </div>
                                         <?php echo form_close(); ?>
@@ -132,14 +139,41 @@ if (isset($this->session->userdata['logged_in'])) {
     <?php //echo form_close();    ?>
 <?php } ?>
 </div>
+<!-- jQuery -->
+<script src="<?php echo base_url(); ?>asset/vendor/jquery/jquery.min.js"></script>
 <script>
     function confirmCreExam(){
-        y = confirm('ต้องการสร้างแบบทดสอบ');
-        if(y){
-            return true;
+        var numOfQues = document.getElementById('numOfQues').value;
+        if(numOfQues!=0){
+            alert('แบบทดสอบจำนวน '+numOfQues+' ข้อ');
+            y = confirm('ต้องการสร้างแบบทดสอบ');
+            if(y){
+                return true;
+            }else{
+                return false;
+            }
         }else{
+            alert('กรุณาเลือกคำถามอย่างน้อยหนึ่งข้อ...');
             return false;
         }
+    }
+    
+    var arr = [];
+    for(var i=0;i<<?php echo count($rs2);?>;i++){
+        arr[i] = document.getElementById('inputText'+i);
+    }
+   
+    function sumOfQues(n){
+        var result = 0;
+        for(var i=0;i<n;i++){
+            if(arr[i].value === ''){
+                result+= 0;
+            }else{
+                result += parseFloat(arr[i].value);
+            }
+        }
+        document.getElementById('numOfQues').value = result;
+        
     }
 </script>
 

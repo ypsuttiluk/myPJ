@@ -23,10 +23,17 @@ class userModel extends CI_Model {
             $this->db->where($condition);
             $this->db->limit(1);
             $query = $this->db->get();
+        } else if ($str[0] != 's' || $str[0] != 'S' || $str[0] != 't' || $str[0] != 'T') {
+            $condition = "ID =" . "'" . $data['username'] . "' AND " . "password =" . "'" . md5($data['password']) . "'";
+            $this->db->select('*');
+            $this->db->from('users');
+            $this->db->where($condition);
+            $this->db->limit(1);
+            $query = $this->db->get();
         } else {
             return false;
         }
-      
+
 
         if ($query->num_rows() == 1) {
             return $query->result_array();

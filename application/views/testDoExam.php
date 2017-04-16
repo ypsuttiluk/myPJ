@@ -103,6 +103,10 @@ if (isset($this->session->userdata['logged_in'])) {
         $userYear = $this->session->userdata['logged_in']['userYear'];
         $userDegree = $this->session->userdata['logged_in']['userDegree'];
     }
+    if ($this->session->userdata['logged_in']['userType'] == 'a') {
+        $userType = $this->session->userdata['logged_in']['userType'];
+        $userName = $this->session->userdata['logged_in']['userName'];
+    }
 } else {
 
     redirect('index.php/MainController/login', 'refresh');

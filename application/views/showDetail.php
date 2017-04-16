@@ -18,6 +18,10 @@ if (isset($this->session->userdata['logged_in'])) {
         $userYear = $this->session->userdata['logged_in']['userYear'];
         $userDegree = $this->session->userdata['logged_in']['userDegree'];
     }
+    if ($this->session->userdata['logged_in']['userType'] == 'a') {
+        $userType = $this->session->userdata['logged_in']['userType'];
+        $userName = $this->session->userdata['logged_in']['userName'];
+    }
 } else {
 
     redirect('index.php/MainController/login', 'refresh');
@@ -35,7 +39,7 @@ if (isset($this->session->userdata['logged_in'])) {
                         <div class="panel-heading">
 
 
-                            <i class="fa fa-file-text fa-fw"></i> ชื่อห้องเรียน : 
+                            <i class="fa fa-file-text fa-fw"></i> ผลลัพธ์การทดสอบ 
 
                         </div>
 
@@ -82,12 +86,15 @@ if (isset($this->session->userdata['logged_in'])) {
 </div>
 
 
-<script src="<?php echo base_url(); ?>asset/vendor/ajax/libs/jquery/jquery.min.js"></script>
+<script src="//code.jquery.com/jquery-1.12.4.js"></script>
 <script src="<?php echo base_url(); ?>asset/vendor/ajax/libs/bootbox.js/bootbox.min.js"></script>
 <script src="<?php echo base_url(); ?>asset/vendor/bootstrap/js/bootstrap.min.js"></script>
 
+
 <script>
-    
+    function testFunction(){
+        alert('123');
+    }
     function textToBin(text) {
         
       var length = text.length,output='';
@@ -101,6 +108,7 @@ if (isset($this->session->userdata['logged_in'])) {
     }
     $(document).ready(function () {
         var table = $('#resultDetail').DataTable({
+            
             ajax: '<?php echo base_url(); ?>index.php/AjaxController/getResult/<?php echo $userKey; ?>'
         });
         $('#resultDetail tbody').on('click', 'tr', function () {
@@ -113,13 +121,21 @@ if (isset($this->session->userdata['logged_in'])) {
                 message: container.html(),
                 title: "รายละเอียดการทดสอบ",
                 buttons: {
+                    excel:{
+                        label: 'Export PDF',
+                        callback: function () {
+                            var table = $('#example').dataTable();
+                  
+                                window.open('data:application/vnd.ms-excel,' + 
+                                        encodeURIComponent(table[0].outerHTML));
+                
+                        }
+                    },
                     ok: {
                         label: "OK",
-                        className: "btn-primary",
-//                        callback: function () {
-//                            console.log('OK Button');
-//                        }
-                    },
+                        className: "btn-primary" 
+                    }
+                    
 //                    cancel: {
 //                        label: "Cancel",
 //                        className: "btn-default"
@@ -138,39 +154,14 @@ if (isset($this->session->userdata['logged_in'])) {
                     ajax: {
                         data: { name : output },
                         url:'<?php echo base_url(); ?>index.php/AjaxController/getResultDetail/<?php echo $userKey; ?>/'+data[0],
-                     
-                    }
+                    }  
                 });
             });
 
             box.modal('show');
         });
     });
-    
-    
-
-//    $(document).ready(function () {
-//        var table = $('#resultDetail').DataTable({
-//            ajax: '<?php //echo base_url();           ?>index.php/AjaxController/getResult/1',
-//        });
-//
-//
-//        $('#resultDetail tbody').on('click', 'tr', function () {
-//            var data = table.row(this).data();
-//
-//
-//
-//            jQuery(function () {
-//                jQuery('#btnModal').click();
-//                $(".modal-body #bookId").val(data[5]);
-//            });
-//        });
-//    });
-
-//    jQuery(function () {
-//        jQuery('#btnModal').click();
-//    });
-
-
-
+  
+  
+  
 </Script>

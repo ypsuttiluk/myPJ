@@ -188,6 +188,36 @@ class AjaxController extends CI_Controller {
         echo $text;
     }
 
+    public function getUser($flag) {
+        if ($flag != '0') {
+            if ($flag == 't') {
+                $sql = 'select * from teacherdim';
+                $data['rs'] = $this->ExamModel->getData($sql);
+                $data['typeUser'] = 't';
+            }
+            if($flag == 's'){
+                $sql = 'select * from studentdim';
+                $data['rs'] = $this->ExamModel->getData($sql);
+                $data['typeUser'] = 's';
+            }
+        } else {
+            if ($this->input->post('btnGetUser')) {
+                $userType = $this->input->post('userType');
+
+                if ($userType == 't') {
+                    $sql = 'select * from teacherdim';
+                } else if ($userType == 's') {
+                    $sql = 'select * from studentdim';
+                }
+                $data['rs'] = $this->ExamModel->getData($sql);
+
+                $data['typeUser'] = $userType;
+            }
+        }
+        $data['page'] = 'adminPage';
+        $this->load->view('Template/template', $data);
+    }
+
     public function getResultDetail($tKey, $date) {
 
         //$string = $this->examModel->splitAndParseToText($nameOfExam);

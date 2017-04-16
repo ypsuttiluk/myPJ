@@ -18,6 +18,10 @@ if (isset($this->session->userdata['logged_in'])) {
         $userYear = $this->session->userdata['logged_in']['userYear'];
         $userDegree = $this->session->userdata['logged_in']['userDegree'];
     }
+    if ($this->session->userdata['logged_in']['userType'] == 'a') {
+        $userType = $this->session->userdata['logged_in']['userType'];
+        $userName = $this->session->userdata['logged_in']['userName'];
+    }
 } else {
 
     redirect('index.php/MainController/login', 'refresh');
@@ -68,6 +72,12 @@ if (isset($this->session->userdata['logged_in'])) {
                             echo "<br/>";
                             echo "Your Degree is " . $userDegree;
                             echo "<br/>";
+                        }
+                        if ($userType == 'a') {
+                            echo "<h3>ผู้ดูแลระบบ</h3>";
+                            echo "<hr>";
+                            echo "<b>ชื่อ</b> " . $userName;
+                          
                         }
                         ?>
 
