@@ -35,7 +35,7 @@ if (isset($this->session->userdata['logged_in'])) {
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-12">
-                    <input type="text" size="5" id="d2" value="">
+<!--                    <input type="text" size="5" id="d2" value="">-->
                     <div class="panel panel-success">
                         <div class="panel-heading">
                             <div class="pull-right">

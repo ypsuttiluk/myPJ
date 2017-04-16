@@ -37,15 +37,10 @@ if (isset($this->session->userdata['logged_in'])) {
                 <div class="col-lg-12">
                     <div class="panel panel-success">
                         <div class="panel-heading">
-
-
                             <i class="fa fa-file-text fa-fw"></i> ผลลัพธ์การทดสอบ 
-
                         </div>
-
                         <div class="panel-body">
                             <table width="100%" class="table table-striped table-bordered table-hover" id="resultDetail">
-
                                 <thead>
                                     <tr>
                                         <th>วัน/เดือน/ปี</th>
@@ -53,22 +48,16 @@ if (isset($this->session->userdata['logged_in'])) {
                                     </tr>
                                 </thead>
                             </table>
-
                             <div id="example-container" style="display: none">
                                 <table width="100%" class="table table-striped table-bordered table-hover">
-
                                     <thead>
                                         <tr>
                                             <th>รหัสนักศึกษา</th>
                                             <th>ชื่อ</th>
-                                            <th>แบบทดสอบ</th>
                                             <th>คะแนนที่ได้</th>
-                                            <th>วัน/เดือน/ปี</th>
-<!--                                            <th>6</th>-->
                                         </tr>
                                     </thead>
                                 </table>
-
                             </div>
                             <!-- /.table-responsive -->
                         </div>
@@ -89,23 +78,22 @@ if (isset($this->session->userdata['logged_in'])) {
 <script src="//code.jquery.com/jquery-1.12.4.js"></script>
 <script src="<?php echo base_url(); ?>asset/vendor/ajax/libs/bootbox.js/bootbox.min.js"></script>
 <script src="<?php echo base_url(); ?>asset/vendor/bootstrap/js/bootstrap.min.js"></script>
-
+<script type="text/javascript" src="http://www.shieldui.com/shared/components/latest/js/shieldui-all.min.js"></script>
+<script type="text/javascript" src="http://www.shieldui.com/shared/components/latest/js/jszip.min.js"></script>
 
 <script>
-    function testFunction(){
-        alert('123');
-    }
-    function textToBin(text) {
-        
-      var length = text.length,output='';
-      
-      for (var i = 0;i < length; i++) {
-        var bin = text[i].charCodeAt().toString(2);
-        output += bin;
-      } 
-      
-      return output;
-    }
+    
+//    function textToBin(text) {
+//        
+//      var length = text.length,output='';
+//      
+//      for (var i = 0;i < length; i++) {
+//        var bin = text[i].charCodeAt().toString(2);
+//        output += bin;
+//      } 
+//      
+//      return output;
+//    }
     $(document).ready(function () {
         var table = $('#resultDetail').DataTable({
             
@@ -119,18 +107,76 @@ if (isset($this->session->userdata['logged_in'])) {
             var box = bootbox.dialog({
                 show: false,
                 message: container.html(),
-                title: "รายละเอียดการทดสอบ",
+                title: "<h3 style='text-align:center'>รายละเอียดการทดสอบ</h3><br><h5 style='text-align:center'>(วันที่ทำการทดสอบ : "+data[0]+",ชื่อการทดสอบ : "+data[1]+")</h5>",
+//                title:'รายละเอียดการทดสอบ',
                 buttons: {
                     excel:{
-                        label: 'Export PDF',
+                        label: 'Export Excel',
                         callback: function () {
-                            var table = $('#example').dataTable();
-                  
-                                window.open('data:application/vnd.ms-excel,' + 
-                                        encodeURIComponent(table[0].outerHTML));
-                
+                            var dataSource = shield.DataSource.create({
+                                data: "#example",
+                                schema: {
+                                    type: "table",
+                                    fields: {
+                                        รหัสนักศึกษา: { type: String },
+                                        ชื่อ: { type: String },
+                                        คะแนนที่ได้: { type: Number }
+                                    }
+                                }
+                            });
+
+                            // when parsing is done, export the data to Excel
+                            dataSource.read().then(function (data) {
+                                new shield.exp.OOXMLWorkbook({
+                                    author: "PrepBootstrap",
+                                    worksheets: [
+                                        {
+                                            name: "PrepBootstrap Table",
+                                            rows: [
+                                                {
+                                                    cells: [
+                                                        {
+                                                            style: {
+                                                                bold: true
+                                                            },
+                                                            type: String,
+                                                            value: "รหัสนักศึกษา"
+                                                        },
+                                                        {
+                                                            style: {
+                                                                bold: true
+                                                            },
+                                                            type: String,
+                                                            value: "ชื่อ"
+                                                        },
+                                                        {
+                                                            style: {
+                                                                bold: true
+                                                            },
+                                                            type: String,
+                                                            value: "คะแนนที่ได้"
+                                                        }
+                                                    ]
+                                                }
+                                                
+                                            ].concat($.map(data, function(item) {
+                                                return {
+                                                    cells: [
+                                                        { type: String, value: item.รหัสนักศึกษา },
+                                                        { type: Number, value: item.ชื่อ },
+                                                        { type: String, value: item.คะแนนที่ได้ }
+                                                    ]
+                                                };
+                                            }))
+                                        }
+                                    ]
+                                }).saveAs({
+                                    fileName: "downloadExcel"
+                                });
+                            });
                         }
                     },
+                    
                     ok: {
                         label: "OK",
                         className: "btn-primary" 

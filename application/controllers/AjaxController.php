@@ -258,9 +258,7 @@ class AjaxController extends CI_Controller {
             $text.= '[
               "' . $sData[0]['sID'] . '",
               "' . $sData[0]['sName'] . '",
-              "' . $nameOfExam . '",
-              "' . $rs[$i]['sumOfScore'] . '",
-              "' . $date . '"';
+              "' . $rs[$i]['sumOfScore'] . '"';
             $text .=']';
             if ($i != count($rs) - 1) {
                 $text.=',';

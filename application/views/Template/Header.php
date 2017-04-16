@@ -30,6 +30,9 @@
         <!-- Bootstrap select -->
         <link href="<?php echo base_url(); ?>asset/vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
 
+        
+        <link rel="stylesheet" type="text/css" href="http://www.shieldui.com/shared/components/latest/css/light/all.min.css" />
+        
 
 
 
