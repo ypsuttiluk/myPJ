@@ -7,6 +7,8 @@ if (isset($this->session->userdata['logged_in'])) {
         $userName = $this->session->userdata['logged_in']['userName'];
         $userPhone = $this->session->userdata['logged_in']['userPhone'];
         $userRoom = $this->session->userdata['logged_in']['userRoom'];
+        $userEmail = $this->session->userdata['logged_in']['userEmail'];
+        $userPic = $this->session->userdata['logged_in']['userPic'];
     }
     if ($this->session->userdata['logged_in']['userType'] == 's') {
         $userType = $this->session->userdata['logged_in']['userType'];
@@ -17,10 +19,13 @@ if (isset($this->session->userdata['logged_in'])) {
         $userPhone = $this->session->userdata['logged_in']['userPhone'];
         $userYear = $this->session->userdata['logged_in']['userYear'];
         $userDegree = $this->session->userdata['logged_in']['userDegree'];
+        $userEmail = $this->session->userdata['logged_in']['userEmail'];
+        $userPic = $this->session->userdata['logged_in']['userPic'];
     }
     if ($this->session->userdata['logged_in']['userType'] == 'a') {
         $userType = $this->session->userdata['logged_in']['userType'];
         $userName = $this->session->userdata['logged_in']['userName'];
+        $userPic = $this->session->userdata['logged_in']['userPic'];
     }
 } else {
 
@@ -42,36 +47,56 @@ if (isset($this->session->userdata['logged_in'])) {
                     <div class="panel-body"> 
                         <?php
                         if ($userType == 't') {
-                            echo "<h3>อาจารย์</h3>";
-                            echo "<hr>";
-                            echo "Your UserKey is " . $userKey;
-                            echo "<br/>";
-                            echo "Your ID is " . $userID;
-                            echo "<br/>";
-                            echo "Your Username is " . $userName;
-                            echo "<br/>";
-                            echo "Your Phone is " . $userPhone;
-                            echo "<br/>";
-                            echo "Your Room is " . $userRoom;
-                            echo "<br/>";
+                            //echo '<h3><b>ผู้ใช้งาน : อาจารย์</b></h3>';
+                            echo '<hr>';
+                            echo "<table border='0' cellspacing='0' cellpadding='0'>";
+                                echo "<tbody>";
+                                    echo "<tr>";
+                                        echo '<td rowspan="5"><img src="'.base_url().'asset/uploads/'.$userPic.'" style="width:155px;height:191px"></td>';
+                                        echo '<td colspan="4">&nbsp&nbsp&nbsp&nbsp <b>'.$userName.'</b></td>';
+                                    echo '</tr>';
+                                    
+                                    echo "<tr>";
+                                        echo '<td>&nbsp&nbsp&nbsp&nbsp <b>เบอร์โทรศัพท์</b> '.$userPhone.'</td>';
+                                    echo '</tr>';
+                                    
+                                    echo '<tr>';
+                                        echo '<td>&nbsp&nbsp&nbsp&nbsp <b>ห้องพัก</b> '.$userRoom.'</td>';
+                                    echo '</tr>';
+                                    
+                                    echo "<tr>";
+                                        echo '<td>&nbsp&nbsp&nbsp&nbsp <b>Email</b> '.$userEmail.'</td>';
+                                    echo '</tr>';
+                                echo "</tbody>";
+                            echo "</table>";
                         }
                         if ($userType == 's') {
-                            echo "<h3>นักศึกษา</h3>";
-                            echo "<hr>";
-                            echo "Your UserKey is " . $userKey;
-                            echo "<br/>";
-                            echo "Your ID is " . $userID;
-                            echo "<br/>";
-                            echo "Your StudentID is " . $studentID;
-                            echo "<br/>";
-                            echo "Your Username is " . $userName;
-                            echo "<br/>";
-                            echo "Your Phone is " . $userPhone;
-                            echo "<br/>";
-                            echo "Your Year is " . $userYear;
-                            echo "<br/>";
-                            echo "Your Degree is " . $userDegree;
-                            echo "<br/>";
+                            //echo '<h3><b>ผู้ใช้งาน : นักศึกษา</b></h3>';
+                            echo '<hr>';
+                            echo "<table border='0' cellspacing='0' cellpadding='0'>";
+                                echo "<tbody>";
+                                    echo "<tr>";
+                                        echo '<td rowspan="5"><img src="'.base_url().'asset/uploads/'.$userPic.'" style="width:155px;height:191px"></td>';
+                                        echo '<td colspan="4">&nbsp&nbsp&nbsp&nbsp <b>'.$userName.'</b></td>';
+                                    echo '</tr>';
+                                    
+                                    echo "<tr>";
+                                        echo '<td>&nbsp&nbsp&nbsp&nbsp <b>เบอร์โทรศัพท์</b> '.$userPhone.'</td>';
+                                    echo '</tr>';
+                                    
+                                    echo "<tr>";
+                                        echo '<td>&nbsp&nbsp&nbsp&nbsp <b>ชั้นปีที่</b> '.$userYear.'</td>';
+                                    echo '</tr>';
+                                    
+                                    echo '<tr>';
+                                        echo '<td>&nbsp&nbsp&nbsp&nbsp <b>ระดับการศึกษา</b> '.$userDegree.'</td>';
+                                    echo '</tr>';
+                                    
+                                    echo "<tr>";
+                                        echo '<td>&nbsp&nbsp&nbsp&nbsp <b>Email</b> '.$userEmail.'</td>';
+                                    echo '</tr>';
+                                echo "</tbody>";
+                            echo "</table>";
                         }
                         if ($userType == 'a') {
                             echo "<h3>ผู้ดูแลระบบ</h3>";

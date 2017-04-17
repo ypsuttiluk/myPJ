@@ -13,27 +13,57 @@
 
 <script src="<?php echo base_url(); ?>asset/vendor/datatables-responsive/dataTables.responsive.js"></script>
 <!--Custom Theme JavaScript -->
-<!--<script src="<?php //echo base_url();   ?>asset/dist/js/sb-admin-2.js"></script>-->
+<!--<script src="<?php //echo base_url();     ?>asset/dist/js/sb-admin-2.js"></script>-->
 <!-- bootstrap js select-->
 <script src="<?php echo base_url(); ?>asset/vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
 
 
 <script>
 
+    $(function () {
 
-    function ajaxFunction(typeUser){
+        // We can attach the `fileselect` event to all file inputs on the page
+        $(document).on('change', ':file', function () {
+            var input = $(this),
+                    numFiles = input.get(0).files ? input.get(0).files.length : 1,
+                    label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+            input.trigger('fileselect', [numFiles, label]);
+        });
+
+        // We can watch for our custom `fileselect` event like this
+        $(document).ready(function () {
+            $(':file').on('fileselect', function (event, numFiles, label) {
+
+                var input = $(this).parents('.input-group').find(':text'),
+                        log = numFiles > 1 ? numFiles + ' files selected' : label;
+
+                if (input.length) {
+                    input.val(log);
+                } else {
+                    if (log)
+                        alert(log);
+                }
+
+            });
+        });
+
+    });
+
+
+
+    function ajaxFunction(typeUser) {
         var keyUser = $("#colInModal1").val();
         var newPass = $('#colInModal2').val();
-      
+
         $.ajax({
-            url: '<?php echo base_url();?>index.php/MainController/editPass/'+typeUser+'/'+keyUser+'/'+newPass,
+            url: '<?php echo base_url(); ?>index.php/MainController/editPass/' + typeUser + '/' + keyUser + '/' + newPass,
             type: 'POST',
-            success: function(){
+            success: function () {
                 alert('เปลี่ยนรหัสผ่านแล้ว');
                 $('#modalChangePass').modal('hide');
                 //the response variable will hold anything that is written in that php file(in html) and anything you echo in that file
-                }
-        }); 
+            }
+        });
         return false;
     }
 
@@ -57,7 +87,8 @@
         $("#col2").val($(this).closest('tr').children()[2].textContent);
         $("#col3").val($(this).closest('tr').children()[3].textContent);
         $("#col4").val($(this).closest('tr').children()[4].textContent);
-        if ($(this).closest('tr').children()[5].textContent == 'มีสิทธ์') {
+        $("#col6").val($(this).closest('tr').children()[5].textContent);
+        if ($(this).closest('tr').children()[6].textContent == 'มีสิทธ์') {
             $("#License").val('H');
         } else {
             $("#License").val('NH');
@@ -73,7 +104,8 @@
         $("#col3").val($(this).closest('tr').children()[3].textContent);
         $("#col4").val($(this).closest('tr').children()[4].textContent);
         $("#col5").val($(this).closest('tr').children()[5].textContent);
-        if ($(this).closest('tr').children()[6].textContent == 'มีสิทธ์') {
+        $("#col6").val($(this).closest('tr').children()[6].textContent);
+        if ($(this).closest('tr').children()[7].textContent == 'มีสิทธ์') {
             $("#License").val('H');
         } else {
             $("#License").val('NH');

@@ -68,6 +68,7 @@ if (isset($this->session->userdata['logged_in'])) {
                                         <th>ชื่อ-นามสกุล</th>
                                         <th>เบอร์โทรศัพท์</th>
                                         <th>ห้องพัก</th>
+                                        <th>อีเมล์</th>
                                         <th>สิทธ์การใช้งานระบบ</th>
                                     </tr>
                                 </thead>
@@ -79,6 +80,7 @@ if (isset($this->session->userdata['logged_in'])) {
                                             <th><?= $r['tName'] ?></th>
                                             <th><?= $r['tPhone'] ?></th>
                                             <th><?= $r['tRoom'] ?></th>
+                                            <th><?= $r['tEmail'] ?></th>
                                             <?php if ($r['License'] == 'H') { ?>
                                                 <th>มีสิทธ์</th>
                                             <?php } else { ?>
@@ -95,24 +97,38 @@ if (isset($this->session->userdata['logged_in'])) {
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                                 <h4 class="modal-title">EDIT</h4>
                                             </div>
-                                            <?php echo form_open('index.php/MainController/editUser/t'); ?>
+                                            <?php echo form_open_multipart('index.php/MainController/editUser/t'); ?>
                                             <div class="modal-body">
                                                 <input name="tKey" type="text" hidden id="col0">
+                                                
+                                                <div class="form-group input-group">
+                                                    <label class="input-group-btn">
+                                                        <span class="btn btn-primary">
+                                                            รูปภาพ&hellip; <input type="file" style="display: none;" multiple name="tPic" id="tPic">
+                                                        </span>
+                                                    </label>
+                                                    <input type="text" class="form-control" readonly name="tPic">
+                                                </div>
+                                                
                                                 <div class="form-group input-group">
                                                     <span class="input-group-addon">รหัสอาจารย์</span>
                                                     <input type="text" class="form-control" id="col1" readonly/>
                                                 </div>
                                                 <div class="form-group input-group">
                                                     <span class="input-group-addon">ชื่อ-นามสกุล</span>
-                                                    <input name="tName" type="text" class="form-control" id="col2"/>
+                                                    <input name="tName" type="text" class="form-control" id="col2" required/>
                                                 </div>
                                                 <div class="form-group input-group">
                                                     <span class="input-group-addon">เบอร์โทรศัพท์</span>
-                                                    <input name="tPhone" type="text" class="form-control" id="col3"/>
+                                                    <input name="tPhone" type="tel" class="form-control" id="col3" maxlength="10"/>
                                                 </div>
                                                 <div class="form-group input-group">
                                                     <span class="input-group-addon">ห้องพัก</span>
                                                     <input name="tRoom" type="text" class="form-control" id="col4"/>
+                                                </div>
+                                                <div class="form-group input-group">
+                                                    <span class="input-group-addon">อีเมล์</span>
+                                                    <input name="tEmail" type="email" class="form-control" id="col6"/>
                                                 </div>
                                                 <div class="form-group input-group">
                                                     <span class="input-group-addon">สิทธ์การใช้งานระบบ</span>
@@ -143,6 +159,7 @@ if (isset($this->session->userdata['logged_in'])) {
                                         <th>เบอร์โทรศัพท์</th>
                                         <th>ชั้นปี</th>
                                         <th>ระดับการศึกษา</th>
+                                        <th>อีเมล์</th>
                                         <th>สิทธ์การใช้งานระบบ</th>
                                     </tr>
                                 </thead>
@@ -155,6 +172,7 @@ if (isset($this->session->userdata['logged_in'])) {
                                             <th><?= $r['sPhone'] ?></th>
                                             <th><?= $r['sYear'] ?></th>
                                             <th><?= $r['sDegree'] ?></th>
+                                            <th><?= $r['sEmail'] ?></th>
                                             <?php if ($r['License'] == 'H') { ?>
                                                 <th>มีสิทธ์</th>
                                             <?php } else { ?>
@@ -171,28 +189,55 @@ if (isset($this->session->userdata['logged_in'])) {
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                                 <h4 class="modal-title">EDIT</h4>
                                             </div>
-                                            <?php echo form_open('index.php/MainController/editUser/s'); ?>
+                                            <?php echo form_open_multipart('index.php/MainController/editUser/s'); ?>
                                             <div class="modal-body">
                                                 <input id="col0" name="sKey" type="text" hidden>
+                                                
+                                                <div class="form-group input-group">
+                                                    <label class="input-group-btn">
+                                                        <span class="btn btn-primary">
+                                                            รูปภาพ&hellip; <input type="file" style="display: none;" multiple name="sPic" id="sPic">
+                                                        </span>
+                                                    </label>
+                                                    <input type="text" class="form-control" readonly name="sPic">
+                                                </div>
+                                                
                                                 <div class="form-group input-group">
                                                     <span class="input-group-addon">รหัสนักศึกษา</span>
                                                     <input type="text" class="form-control" id="col1" readonly/>
                                                 </div>
                                                 <div class="form-group input-group">
                                                     <span class="input-group-addon">ชื่อ-นามสกุล</span>
-                                                    <input name='sName' type="text" class="form-control" id="col2"/>
+                                                    <input name='sName' type="text" class="form-control" id="col2" required/>
                                                 </div>
                                                 <div class="form-group input-group">
                                                     <span class="input-group-addon">เบอร์โทรศัพท์</span>
-                                                    <input name="sPhone" type="text" class="form-control" id="col3"/>
+                                                    <input name="sPhone" type="tel" class="form-control" id="col3" maxlength="10"/>
                                                 </div>
                                                 <div class="form-group input-group">
                                                     <span class="input-group-addon">ชั้นปี</span>
-                                                    <input name="sYear" type="text" class="form-control" id="col4"/>
+                                                    <select class="form-control" name='sYear' id="col4">
+                                                        <option value="1">ปี 1</option>
+                                                        <option value="2">ปี 2</option>
+                                                        <option value="3">ปี 3</option>
+                                                        <option value="4">ปี 4</option>
+                                                        <option value="5">ปี 5</option>
+                                                        <option value="6">ปี 6</option>
+                                                        <option value="7">ปี 7</option>
+                                                        <option value="8">ปี 8</option>
+                                                    </select>
                                                 </div>
                                                 <div class="form-group input-group">
                                                     <span class="input-group-addon">ระดับการศึกษา</span>
-                                                    <input name="sDegree" type="text" class="form-control" id="col5"/>
+                                                    <select class="form-control" name='sDegree' id="col5">
+                                                        <option value="ป.ตรี">ปริญญาตรี</option>
+                                                        <option value="ป.โท">ปริญญาโท</option>
+                                                        <option value="ป.เอก">ปริญญาเอก</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group input-group">
+                                                    <span class="input-group-addon">อีเมล์</span>
+                                                    <input name="sEmail" type="email" class="form-control" id="col6"/>
                                                 </div>
                                                 <div class="form-group input-group">
                                                     <span class="input-group-addon">สิทธ์การใช้งานระบบ</span>
@@ -224,7 +269,7 @@ if (isset($this->session->userdata['logged_in'])) {
                                     <div class="modal-body">
 
                                         <input type="text" id="colInModal1" />
-                                        <p><label>รหัสผ่านใหม่</label><input name="newPass" type="password" class="form-control" id="colInModal2"/></p>
+                                        <p><label>รหัสผ่านใหม่</label><input name="newPass" type="password" class="form-control" id="colInModal2" required/></p>
 
                                     </div>
                                     <div class="modal-footer">
@@ -243,28 +288,41 @@ if (isset($this->session->userdata['logged_in'])) {
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                         <h3>เพิ่มผู้ใช้งานระบบ : <?php echo $typeUser == 't' ? 'อาจารย์' : 'นักศึกษา'; ?></h3>
                                     </div>
-                                    <?php echo form_open('index.php/MainController/createUser/' . $typeUser); ?>
+                                    <?php echo form_open_multipart('index.php/MainController/createUser/' . $typeUser); ?>
                                     <div class="modal-body">
                                         <?php if ($typeUser == 't') { ?>
                                             <div class="form-group input-group">
+                                                <label class="input-group-btn">
+                                                    <span class="btn btn-primary">
+                                                        รูปภาพ&hellip; <input type="file" style="display: none;" multiple name="newTPic" id="newTPic">
+                                                    </span>
+                                                </label>
+                                                <input type="text" class="form-control" readonly name="newTPic">
+                                            </div>
+                                           
+                                            <div class="form-group input-group">
                                                 <span class="input-group-addon">รหัสอาจารย์</span>
-                                                <input type="text" class="form-control" name="newTID"/>
+                                                <input type="text" class="form-control" name="newTID" required/>
                                             </div>
                                             <div class="form-group input-group">
                                                 <span class="input-group-addon">รหัสผ่าน</span>
-                                                <input type="text" class="form-control" name="newTPassword"/>
+                                                <input type="text" class="form-control" name="newTPassword" required/>
                                             </div>
                                             <div class="form-group input-group">
                                                 <span class="input-group-addon">ชื่อ-นามสกุล</span>
-                                                <input name="newTName" type="text" class="form-control"/>
+                                                <input name="newTName" type="text" class="form-control" required/>
                                             </div>
                                             <div class="form-group input-group">
                                                 <span class="input-group-addon">เบอร์โทรศัพท์</span>
-                                                <input name="newTPhone" type="text" class="form-control"/>
+                                                <input name="newTPhone" type="tel" class="form-control" maxlength="10"/>
                                             </div>
                                             <div class="form-group input-group">
                                                 <span class="input-group-addon">ห้องพัก</span>
-                                                <input name="newTRoom" type="text" class="form-control" id="col4"/>
+                                                <input name="newTRoom" type="text" class="form-control"/>
+                                            </div>
+                                            <div class="form-group input-group">
+                                                <span class="input-group-addon">อีเมล์</span>
+                                                <input name="newTEmail" type="email" class="form-control"/>
                                             </div>
                                             <div class="form-group input-group">
                                                 <span class="input-group-addon">สิทธ์การใช้งานระบบ</span>
@@ -276,20 +334,29 @@ if (isset($this->session->userdata['logged_in'])) {
                                         <?php } ?>
                                         <?php if ($typeUser == 's') { ?>
                                             <div class="form-group input-group">
+                                                <label class="input-group-btn">
+                                                    <span class="btn btn-primary">
+                                                        รูปภาพ&hellip; <input type="file" style="display: none;" multiple name="newSPic" id="newSPic">
+                                                    </span>
+                                                </label>
+                                                <input type="text" class="form-control" readonly name="newSPic">
+                                            </div>
+                                        
+                                            <div class="form-group input-group">
                                                 <span class="input-group-addon">รหัสนักศึกษา</span>
-                                                <input type="text" class="form-control" name="newSID"/>
+                                                <input type="text" class="form-control" name="newSID" required/>
                                             </div>
                                             <div class="form-group input-group">
                                                 <span class="input-group-addon">รหัสผ่าน</span>
-                                                <input type="text" class="form-control" name="newSPassword"/>
+                                                <input type="text" class="form-control" name="newSPassword" required/>
                                             </div>
                                             <div class="form-group input-group">
                                                 <span class="input-group-addon">ชื่อ-นามสกุล</span>
-                                                <input name='newSName' type="text" class="form-control" />
+                                                <input name='newSName' type="text" class="form-control" required/>
                                             </div>
                                             <div class="form-group input-group">
                                                 <span class="input-group-addon">เบอร์โทรศัพท์</span>
-                                                <input name="newSPhone" type="text" class="form-control"/>
+                                                <input name="newSPhone" type="tel" class="form-control" maxlength="10"/>
                                             </div>
                                             <div class="form-group input-group">
                                                 <span class="input-group-addon">ชั้นปี</span>
@@ -311,6 +378,10 @@ if (isset($this->session->userdata['logged_in'])) {
                                                     <option value="ป.โท">ปริญญาโท</option>
                                                     <option value="ป.เอก">ปริญญาเอก</option>
                                                 </select>
+                                            </div>
+                                            <div class="form-group input-group">
+                                                <span class="input-group-addon">อีเมล์</span>
+                                                <input name="newSEmail" type="email" class="form-control"/>
                                             </div>
                                             <div class="form-group input-group">
                                                 <span class="input-group-addon">สิทธ์การใช้งานระบบ</span>

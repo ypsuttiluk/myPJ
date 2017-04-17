@@ -92,6 +92,7 @@ if (isset($this->session->userdata['logged_in'])) {
         $userName = $this->session->userdata['logged_in']['userName'];
         $userPhone = $this->session->userdata['logged_in']['userPhone'];
         $userRoom = $this->session->userdata['logged_in']['userRoom'];
+        $userEmail = $this->session->userdata['logged_in']['userEmail'];
     }
     if ($this->session->userdata['logged_in']['userType'] == 's') {
         $userType = $this->session->userdata['logged_in']['userType'];
@@ -102,6 +103,7 @@ if (isset($this->session->userdata['logged_in'])) {
         $userPhone = $this->session->userdata['logged_in']['userPhone'];
         $userYear = $this->session->userdata['logged_in']['userYear'];
         $userDegree = $this->session->userdata['logged_in']['userDegree'];
+        $userEmail = $this->session->userdata['logged_in']['userEmail'];
     }
     if ($this->session->userdata['logged_in']['userType'] == 'a') {
         $userType = $this->session->userdata['logged_in']['userType'];

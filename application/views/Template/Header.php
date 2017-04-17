@@ -160,8 +160,8 @@
                             <ul class="dropdown-menu dropdown-user">
                                 <li><a href="<?php echo base_url(); ?>index.php/MainController"><i class="fa fa-user fa-fw"></i> User Profile</a>
                                 </li>
-                                <li><a href="<?php echo base_url(); ?>index.php/MainController/userDetail"><i class="fa fa-gear fa-fw"></i> Settings</a>
-                                </li>
+<!--                                <li><a href="<?php echo base_url(); ?>index.php/MainController/userDetail"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                                </li>-->
                                 <li class="divider"></li>
                                 <li><a href="<?php echo base_url(); ?>index.php/MainController/logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                                 </li>
