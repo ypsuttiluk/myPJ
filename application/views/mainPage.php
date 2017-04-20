@@ -75,11 +75,17 @@ if (isset($this->session->userdata['logged_in'])) {
                             echo '<hr>';
                             echo "<table border='0' cellspacing='0' cellpadding='0'>";
                                 echo "<tbody>";
+                                if($userPic != NULL){
                                     echo "<tr>";
                                         echo '<td rowspan="5"><img src="'.base_url().'asset/uploads/'.$userPic.'" style="width:155px;height:191px"></td>';
                                         echo '<td colspan="4">&nbsp&nbsp&nbsp&nbsp <b>'.$userName.'</b></td>';
                                     echo '</tr>';
-                                    
+                                }else{
+                                    echo "<tr>";
+                                        echo '<td rowspan="5"><img src="'.base_url().'asset/uploads/user.png" style="width:155px;height:191px"></td>';
+                                        echo '<td colspan="4">&nbsp&nbsp&nbsp&nbsp <b>'.$userName.'</b></td>';
+                                    echo '</tr>'; 
+                                }
                                     echo "<tr>";
                                         echo '<td>&nbsp&nbsp&nbsp&nbsp <b>เบอร์โทรศัพท์</b> '.$userPhone.'</td>';
                                     echo '</tr>';
