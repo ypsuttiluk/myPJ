@@ -77,11 +77,11 @@ if (isset($this->session->userdata['logged_in'])) {
 </div>
 
 
-<script src="//code.jquery.com/jquery-1.12.4.js"></script>
+<script src="<?php echo base_url(); ?>asset/vendor/other/jquery-1.12.4.js"></script>
 <script src="<?php echo base_url(); ?>asset/vendor/ajax/libs/bootbox.js/bootbox.min.js"></script>
 <script src="<?php echo base_url(); ?>asset/vendor/bootstrap/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="http://www.shieldui.com/shared/components/latest/js/shieldui-all.min.js"></script>
-<script type="text/javascript" src="http://www.shieldui.com/shared/components/latest/js/jszip.min.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>asset/vendor/other/shieldui-all.min.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>asset/vendor/other/jszip.min.js"></script>
 
 <script>
     

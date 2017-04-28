@@ -52,7 +52,7 @@ if (isset($this->session->userdata['logged_in'])) {
                             echo "<table border='0' cellspacing='0' cellpadding='0'>";
                                 echo "<tbody>";
                                     echo "<tr>";
-                                        echo '<td rowspan="5"><img src="'.base_url().'asset/uploads/'.$userPic.'" style="width:155px;height:191px"></td>';
+                                        echo '<td rowspan="5"><img src="'.base_url().'asset/uploads/'.$userPic.'" style="width:155px;height:191px" ></td>';
                                         echo '<td colspan="4">&nbsp&nbsp&nbsp&nbsp <b>'.$userName.'</b></td>';
                                     echo '</tr>';
                                     
@@ -65,7 +65,7 @@ if (isset($this->session->userdata['logged_in'])) {
                                     echo '</tr>';
                                     
                                     echo "<tr>";
-                                        echo '<td>&nbsp&nbsp&nbsp&nbsp <b>Email</b> '.$userEmail.'</td>';
+                                        echo '<td>&nbsp&nbsp&nbsp&nbsp<i class="glyphicon glyphicon-envelope"></i> <b>Email</b> '.$userEmail.'</td>';
                                     echo '</tr>';
                                 echo "</tbody>";
                             echo "</table>";

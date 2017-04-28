@@ -149,7 +149,7 @@ class MainController extends CI_Controller {
 
     public function userDetail() {
 
-        $data['page'] = 'userDetail';
+        $data['page'] = 'mainPage';
         $this->load->view('Template/template', $data);
     }
 
@@ -262,8 +262,12 @@ class MainController extends CI_Controller {
     public function index() {
 //$data['test'] = '';
         if (isset($this->session->userdata['logged_in'])) {
-            $data['page'] = 'mainPage';
-            $this->load->view('Template/template', $data);
+            if ($this->session->userdata['logged_in']['userType'] != 'a') {
+                $this->load->view('mainPage2');
+            } else {
+                $data['page'] = 'mainPage';
+                $this->load->view('Template/template', $data);
+            }
         } else {
             $data['page'] = 'loginPage';
             $this->load->view('Template/template', $data);

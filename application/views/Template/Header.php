@@ -30,9 +30,9 @@
         <!-- Bootstrap select -->
         <link href="<?php echo base_url(); ?>asset/vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
 
-        
-        <link rel="stylesheet" type="text/css" href="http://www.shieldui.com/shared/components/latest/css/light/all.min.css" />
-        
+
+        <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>asset/vendor/light/all.min.css" />
+
 
 
 
@@ -41,7 +41,16 @@
             body, html{
                 background: #222222;
                 font-family: 'Lato', sans-serif;
+                background-image: url('<?php echo base_url(); ?>asset/images/bg.jpg');
+                background-repeat:no-repeat;
+                background-size:100%;
+                background-position:center;
+                background-heigth:auto;
+                background-width:auto;
+             
             }
+
+
             .form-group input[type="checkbox"] {
                 display: none;
             }
@@ -107,7 +116,7 @@
                         <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
                     </button>
 
-                    <a class="navbar-brand" href="<?php echo base_url(); ?>index.php/MainController">WEB-EXAMINATION DEMO</a>
+                    <a class="navbar-brand" href="<?php echo base_url(); ?>index.php/MainController">WEB-EXAMINATION</a>
                 </div>
                 <!-- /.navbar-header -->
 
@@ -118,7 +127,7 @@
 
                         <?php if (isset($this->session->userdata['logged_in']) && $userType == 't') { ?>
                             <!--<li>
-                                <a href="<?php //echo base_url();                     ?>index.php/MainController/roomDetail/<?php //echo $userKey;                     ?>">ห้องเรียน</a>
+                                <a href="<?php //echo base_url();                        ?>index.php/MainController/roomDetail/<?php //echo $userKey;                        ?>">ห้องเรียน</a>
                             </li> -->
                             <li>
                                 <a href="<?php echo base_url(); ?>index.php/RoomController/roomDetail/<?php echo $userKey; ?>/<?php echo $userType; ?>">ห้องเรียน</a>
@@ -133,7 +142,7 @@
                                 <a href="<?php echo base_url(); ?>index.php/MainController/resultDetail">ผลลัพธ์การทดสอบ</a>
                             </li>
                             <li>
-                                <a href="<?php echo base_url(); ?>index.php/MainController"><b id='welcome'><i><?php echo $userName; ?></i></b></a>
+                                <a href="<?php echo base_url(); ?>index.php/MainController/userDetail"><b id='welcome'><i><?php echo $userName; ?></i></b></a>
                             </li>
                         <?php } ?>
                         <?php if (isset($this->session->userdata['logged_in']) && $userType == 's') { ?>
@@ -141,16 +150,16 @@
                                 <a href="<?php echo base_url(); ?>index.php/RoomController/roomDetail/<?php echo $userKey; ?>/<?php echo $userType; ?>">ห้องเรียน</a>
                             </li>
                             <li>
-                                <a href="<?php echo base_url(); ?>index.php/MainController"><b id='welcome'><i><?php echo $userName; ?></i></b></a>
+                                <a href="<?php echo base_url(); ?>index.php/MainController/userDetail"><b id='welcome'><i><?php echo $userName; ?></i></b></a>
                             </li>
                         <?php } ?>
                         <?php if (isset($this->session->userdata['logged_in']) && $userType == 'a') { ?>
-                            
+
                             <li>
-                                <a href="<?php echo base_url(); ?>index.php/MainController"><b id='welcome'><i><?php echo $userName; ?></i></b></a>
+                                <a href="<?php echo base_url(); ?>index.php/MainController/userDetail"><b id='welcome'><i><?php echo $userName; ?></i></b></a>
                             </li>
-                             <li>
-                               <a href="<?php echo base_url(); ?>index.php/AjaxController/getUser/t">รายชื่อผู้ใช้ระบบ</a>
+                            <li>
+                                <a href="<?php echo base_url(); ?>index.php/AjaxController/getUser/t">รายชื่อผู้ใช้ระบบ</a>
                             </li>
                         <?php } ?>
                         <li class="dropdown">
@@ -158,7 +167,7 @@
                                 <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
                             </a>
                             <ul class="dropdown-menu dropdown-user">
-                                <li><a href="<?php echo base_url(); ?>index.php/MainController"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                                <li><a href="<?php echo base_url(); ?>index.php/MainController/userDetail"><i class="fa fa-user fa-fw"></i> User Profile</a>
                                 </li>
 <!--                                <li><a href="<?php echo base_url(); ?>index.php/MainController/userDetail"><i class="fa fa-gear fa-fw"></i> Settings</a>
                                 </li>-->
